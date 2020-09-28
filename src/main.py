@@ -1,4 +1,5 @@
 import os
+import sys
 
 import pygame
 from pygame.math import Vector2
@@ -82,4 +83,5 @@ class GameWindow:
 
 game = GameWindow()
 game.run()
+sys.exit()
 pygame.quit()
