@@ -12,13 +12,18 @@ class Menu:
         self.running = True
 
     def render(self):
-            self.clock.tick(60)
-            self.window.blit(pygame.image.load("background.jpg"), (0, 0))
-            start_button = pygame.draw.rect(self.window, (255, 20, 147), (150, 90, 500, 50));
+        self.clock.tick(60)
+        self.window.blit(pygame.image.load("background.jpg"), (0, 0))
+        text = ["Let's go!", "Settings", "Results", "Achivements", "Check the connection"]
+        self.print_button((255, 20, 147), (150, 90, 500, 50), text)
+
+    def print_button(self, color, size, text):
+        for i, el in enumerate(text):
+            pygame.draw.rect(self.window, color, (150, 90 + (i) * 40 + 20 * i, 500, 40));
             myfont = pygame.font.SysFont('Comic Sans MS', 30)
-            text = myfont.render('Start game', False, (0, 0, 0))
-            self.window.blit(text, (300, 90))
-            pygame.display.update()
+            text1 = myfont.render(el, True, (0, 0, 0))
+            self.window.blit(text1, (300, 90 + (i) * 40 + 20 * i))
+        pygame.display.update()
 
     def catch_action(self):
         x, y = pygame.mouse.get_pos()
@@ -34,8 +39,8 @@ class Menu:
                 sys.exit()
 
     def run(self):
-        self.render()
         while self.running:
+            self.render()
             self.catch_action()
 
 
