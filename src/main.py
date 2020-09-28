@@ -20,6 +20,7 @@ class GameWindow:
         pygame.display.set_icon(pygame.image.load("Pandemonica.png"))
         self.clock = pygame.time.Clock()
         self.running = True
+        self.enemy = states.Unit(position=Vector2(self.game_state.world_size.x, 20), speed=Vector2(-4, 0))
 
     def process_input(self):
         for event in pygame.event.get():
@@ -32,7 +33,7 @@ class GameWindow:
                     break
                 elif event.key == pygame.K_UP:
                     if self.player.position.y + self.player.size.y >= self.game_state.ground.y:
-                        self.player.speed -= Vector2(0, 10)
+                        self.player.speed -= Vector2(0, 14)
 
     def update(self):
         self.player.speed += self.game_state.gravity
@@ -41,11 +42,28 @@ class GameWindow:
             self.player.position.y = self.game_state.ground.y - self.player.size.y
             self.player.speed = Vector2(self.player.speed.x, 0)
 
+        self.enemy.speed += self.game_state.gravity
+        self.enemy.position += self.enemy.speed
+        if self.enemy.position.x <= -40:
+            self.enemy.position = Vector2(self.game_state.world_size.x, 20)
+        if self.enemy.position.y + self.enemy.size.y >= self.game_state.ground.y and self.enemy.speed.y >= 0:
+            self.enemy.position.y = self.game_state.ground.y - self.enemy.size.y
+            self.enemy.speed = Vector2(self.enemy.speed.x, 0)
+        if not (self.player.position.x > self.enemy.position.x + self.enemy.size.x or
+                self.player.position.x + self.player.size.x < self.enemy.position.x or
+                self.player.position.y > self.enemy.position.y + self.enemy.size.y or
+                self.player.position.y + self.player.size.y < self.enemy.position.y):
+            self.enemy.position = Vector2(self.game_state.world_size.x, 20)
+
     def render(self):
         self.window.fill((53, 129, 227))  # ФОН
         player_collision = [int(x) for x in
                             (self.player.position.x, self.player.position.y, self.player.size.x, self.player.size.y)]
+        enemy_collision = [int(x) for x in
+                            (self.enemy.position.x, self.enemy.position.y, self.enemy.size.x, self.enemy.size.y)]
+
         pygame.draw.rect(self.window, (73, 111, 13), player_collision)
+        pygame.draw.rect(self.window, (140, 10, 13), enemy_collision)
         ground_level = (
             int(self.game_state.ground.x) * self.window_proportion,
             int(self.game_state.ground.y) * self.window_proportion,
