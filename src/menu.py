@@ -26,11 +26,18 @@ class Menu:
     def render1(self):
         self.clock.tick(60)
         self.window.blit(pygame.image.load("background.jpg"), (0, 0))
+        self.to_main_menu()
         pygame.display.update()
+
+    def to_main_menu(self):
+        pygame.draw.rect(self.window, (255, 20, 147), (0, 0, 190, 40))
+        font = pygame.font.SysFont('Comic Sans MS', 30)
+        text1 = font.render('To main menu', True, (0, 0, 0))
+        self.window.blit(text1, (0, 0))
 
     def print_button(self, color, size, text):
         for i, el in enumerate(text):
-            pygame.draw.rect(self.window, color, (150, 90 + i * 40 + 20 * i, 500, 40));
+            pygame.draw.rect(self.window, color, (150, 90 + i * 40 + 20 * i, 500, 40))
             font1 = pygame.font.SysFont('Comic Sans MS', 30)
             text1 = font1.render(el, True, (0, 0, 0))
             self.window.blit(text1, (300, 90 + i * 40 + 20 * i))
@@ -46,15 +53,17 @@ class Menu:
                     game = g.GameWindow()
                     game.run()
                 if 150 <= x <= 650 and 150 <= y <= 190:
-                    self.num_ren = 1;
+                    self.num_ren = 1
+                if self.num_ren != 0 and 0 <= x <= 190 and 0 <= y <= 40:
+                    self.num_ren = 0
             if event.type == pygame.QUIT:
                 self.running = False
                 sys.exit()
 
     def play_music(self):
-            pygame.mixer.music.load('song.mp3')
-            pygame.mixer.music.play(-1)
-            pygame.mixer.music.set_volume(0.2)
+        pygame.mixer.music.load('song.mp3')
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.2)
 
     def run(self):
         self.play_music()
