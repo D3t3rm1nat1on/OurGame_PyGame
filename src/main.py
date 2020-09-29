@@ -4,6 +4,7 @@ import pygame
 from pygame.math import Vector2
 
 import src.state as states
+from .command import JumpCommand, MoveCommand
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -22,6 +23,7 @@ class GameWindow:
         self.running = True
         self.enemies = [states.Unit(position=Vector2(self.game_state.world_size.x, 20), speed=Vector2(-4, 0))]
         self.enemies.append(states.Unit(position=Vector2(self.game_state.world_size.x + 100, 20), speed=Vector2(-4, 0)))
+        self.commands = []
 
     def process_input(self):
         for event in pygame.event.get():
@@ -33,15 +35,16 @@ class GameWindow:
                     self.running = False
                     break
                 elif event.key == pygame.K_UP:
-                    if self.player.position.y + self.player.size.y >= self.game_state.ground.y:
-                        self.player.speed -= Vector2(0, 14)
+                    command = JumpCommand(self.game_state, self.player)
+                    self.commands.append(command)
+
+        command = MoveCommand(self.game_state, self.player)
+        self.commands.append(command)
 
     def update(self):
-        self.player.speed += self.game_state.gravity
-        self.player.position += self.player.speed
-        if self.player.position.y + self.player.size.y >= self.game_state.ground.y and self.player.speed.y >= 0:
-            self.player.position.y = self.game_state.ground.y - self.player.size.y
-            self.player.speed = Vector2(self.player.speed.x, 0)
+        for command in self.commands:
+            command.run()
+        self.commands.clear()
 
         for enemy in self.enemies:
             enemy.speed += self.game_state.gravity
