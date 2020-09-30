@@ -12,16 +12,31 @@ class Menu:
         self.clock = pygame.time.Clock()
         self.running = True
         self.settings = Settings()
+        self.text = [[(255, 20, 147), (150, 90, 500, 40), "Let's go!", (300, 90), False],
+                     [(255, 20, 147), (150, 150, 500, 40), "Settings", (300, 150), False],
+                     [(255, 20, 147), (150, 210, 500, 40), "Results", (300, 210), False],
+                     [(255, 20, 147), (150, 270, 500, 40), "Achievements", (300, 270), False],
+                     [(255, 20, 147), (150, 330, 500, 40), "Check the connection", (300, 330), False]]
+
+        self.text_settings = [
+            [(255, 20, 147), (150, 90, 500, 40), "Sound:" + str(self.settings.vol) + "%", (300, 90), False],
+            [(255, 20, 147), (150, 150, 500, 40), "Unlocked themes", (300, 150), False],
+            [(255, 20, 147), (150, 210, 500, 40), "Change connection", (300, 210), False]]
+
         self.num_ren = 0
         self.renders = [self.render0, self.render1]
+
+    def button(self, color_rect, coordinates, text, start_text):
+        pygame.draw.rect(self.window, color_rect, coordinates)
+        self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)),
+                         start_text)
 
     def render0(self):
         self.clock.tick(60)
         self.window.blit(pygame.image.load("background.jpg"), (0, 0))
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render('Start menu', True, (0, 0, 0)),
                          (300, 20))
-        text = ["Let's go!", "Settings", "Results", "Achievements", "Check the connection"]
-        self.print_button((255, 20, 147), (150, 90, 500, 50), text)
+        self.print_button( self.text)
         pygame.display.update()
 
     def render1(self):
@@ -29,9 +44,9 @@ class Menu:
         self.window.blit(pygame.image.load("background.jpg"), (0, 0))
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render('Settings', True, (0, 0, 0)),
                          (300, 20))
-        self.to_main_menu()
-        text = ["Sound:" + str(self.settings.vol ) + "%", "Unlocked themes", "Change connection"]
-        self.print_button((255, 20, 147), (150, 90, 500, 50), text)
+        self.button((255, 20, 147), (0, 0, 190, 40), 'To main menu', (0, 0))
+        self.text_settings[0][2] = "Sound:" + str(self.settings.vol) + "%"
+        self.print_button( self.text_settings)
         self.print_vol_change((255, 20, 147))
         pygame.display.update()
 
@@ -43,22 +58,15 @@ class Menu:
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render('+', True, (0, 0, 0)),
                          (670, 85))
 
-    def to_main_menu(self):
-        pygame.draw.rect(self.window, (255, 20, 147), (0, 0, 190, 40))
-        font = pygame.font.SysFont('Comic Sans MS', 30)
-        text1 = font.render('To main menu', True, (0, 0, 0))
-        self.window.blit(text1, (0, 0))
-
-    def print_button(self, color, size, text):
+    def print_button(self,  text):
         for i, el in enumerate(text):
-            pygame.draw.rect(self.window, color, (150, 90 + i * 40 + 20 * i, 500, 40))
-            font1 = pygame.font.SysFont('Comic Sans MS', 30)
-            text1 = font1.render(el, True, (0, 0, 0))
-            self.window.blit(text1, (300, 90 + i * 40 + 20 * i))
+            self.button(el[0], el[1], el[2], el[3])
 
     def catch_action(self):
         x, y = pygame.mouse.get_pos()
         for event in pygame.event.get():
+            if self.num_ren == 0 and 150 <= x <= 650 and 150 <= y <= 190:
+                self.draw_frame(150, 150, 500, 40)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.num_ren == 0 and 150 <= x <= 650 and 90 <= y <= 130:
                     self.running = False
@@ -77,6 +85,14 @@ class Menu:
                 self.running = False
                 sys.exit()
 
+    def draw_frame(self, x, y, lx, ly):
+        wildth = 10
+        pygame.draw.line(self.window, (160, 160, 160), (x, y), (x + lx, y), wildth)
+        pygame.draw.line(self.window, (160, 160, 160), (x, y), (x, y + ly), wildth)
+        pygame.draw.line(self.window, (160, 160, 160), (x, y + ly), (x + lx, y + ly), wildth)
+        pygame.draw.line(self.window, (160, 160, 160), (x + lx, y), (x + lx, y + ly), wildth)
+        pygame.display.update()
+
     def run(self):
 
         while self.running:
@@ -94,12 +110,12 @@ class Settings:
     def lower_sound(self):
         if self.vol > 0:
             self.vol -= 10
-            pygame.mixer.music.set_volume(self.vol/100.0)
+            pygame.mixer.music.set_volume(self.vol / 100.0)
 
     def louder_sound(self):
         if self.vol < 100:
             self.vol += 10
-            pygame.mixer.music.set_volume(self.vol/100.0)
+            pygame.mixer.music.set_volume(self.vol / 100.0)
 
     def play_music(self, volume):
         self.vol = volume
