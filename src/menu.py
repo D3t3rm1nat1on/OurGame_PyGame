@@ -1,27 +1,26 @@
 import pygame, sys
 from pygame import font
 
-''' окно '''
-
-
 class Menu:
     def __init__(self):
         self.window = pygame.display.set_mode((1600, 900))
         pygame.display.set_icon(pygame.image.load("Pandemonica.png"))
-        pygame.display.set_caption('Welcom to the club, buddy')
+        pygame.display.set_caption('Welcome to the club, buddy')
         self.clock = pygame.time.Clock()
         self.running = True
         self.settings = Settings()
-        self.text = [[(255, 20, 147), (150, 90, 500, 40), "Let's go!", (300, 90), False],
-                     [(255, 20, 147), (150, 150, 500, 40), "Settings", (300, 150), False],
-                     [(255, 20, 147), (150, 210, 500, 40), "Results", (300, 210), False],
-                     [(255, 20, 147), (150, 270, 500, 40), "Achievements", (300, 270), False],
-                     [(255, 20, 147), (150, 330, 500, 40), "Check the connection", (300, 330), False]]
+        self.text = [
+            [(255, 20, 147), (150, 90, 500, 40), "Let's go!", (300, 90), False],
+            [(255, 20, 147), (150, 150, 500, 40), "Settings", (300, 150), False],
+            [(255, 20, 147), (150, 210, 500, 40), "Results", (300, 210), False],
+            [(255, 20, 147), (150, 270, 500, 40), "Achievements", (300, 270), False],
+            [(255, 20, 147), (150, 330, 500, 40), "Check the connection", (300, 330), False]]
 
         self.text_settings = [
             [(255, 20, 147), (150, 90, 500, 40), "Sound:" + str(self.settings.vol) + "%", (300, 90), False],
             [(255, 20, 147), (150, 150, 500, 40), "Unlocked themes", (300, 150), False],
-            [(255, 20, 147), (150, 210, 500, 40), "Change connection", (300, 210), False]]
+            [(255, 20, 147), (150, 210, 500, 40), "Change connection", (300, 210), False],
+            [(255, 20, 147), (0, 0, 190, 40), 'To main menu', (0, 0), False]]
 
         self.num_ren = 0
         self.renders = [self.render0, self.render1]
@@ -36,7 +35,7 @@ class Menu:
         self.window.blit(pygame.image.load("background.jpg"), (0, 0))
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render('Start menu', True, (0, 0, 0)),
                          (300, 20))
-        self.print_button( self.text)
+        self.print_button(self.text)
         pygame.display.update()
 
     def render1(self):
@@ -44,7 +43,6 @@ class Menu:
         self.window.blit(pygame.image.load("background.jpg"), (0, 0))
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render('Settings', True, (0, 0, 0)),
                          (300, 20))
-        self.button((255, 20, 147), (0, 0, 190, 40), 'To main menu', (0, 0))
         self.text_settings[0][2] = "Sound:" + str(self.settings.vol) + "%"
         self.print_button( self.text_settings)
         self.print_vol_change((255, 20, 147))
@@ -127,5 +125,4 @@ class Settings:
 pygame.init()
 pygame.font.init()
 menu = Menu()
-
 menu.run()
