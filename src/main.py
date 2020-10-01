@@ -1,4 +1,5 @@
 import os
+import random
 
 import pygame
 from pygame.math import Vector2
@@ -20,8 +21,8 @@ class GameWindow:
         pygame.display.set_icon(pygame.image.load("Pandemonica.png"))
         self.clock = pygame.time.Clock()
         self.running = True
-        self.enemies = [states.Unit(position=Vector2(self.game_state.world_size.x, 20), speed=Vector2(-4, 0))]
-        self.enemies.append(states.Unit(position=Vector2(self.game_state.world_size.x + 100, 20), speed=Vector2(-4, 0)))
+        self.enemies = [states.Unit(position=Vector2(self.game_state.world_size.x, 20), speed=Vector2(-8, 0))]
+        self.enemies.append(states.Unit(position=Vector2(self.game_state.world_size.x + 100, 20), speed=Vector2(-8, 0)))
 
     def process_input(self):
         for event in pygame.event.get():
@@ -47,7 +48,8 @@ class GameWindow:
             enemy.speed += self.game_state.gravity
             enemy.position += enemy.speed
             if enemy.position.x <= -40:
-                enemy.position = Vector2(self.game_state.world_size.x, 20)
+                rand = random.randint(self.game_state.world_size.x / 2, self.game_state.world_size.x)
+                enemy.position = Vector2(rand, 20)
             if enemy.position.y + enemy.size.y >= self.game_state.ground.y and enemy.speed.y >= 0:
                 enemy.position.y = self.game_state.ground.y - enemy.size.y
                 enemy.speed = Vector2(enemy.speed.x, 0)
@@ -55,7 +57,8 @@ class GameWindow:
                     self.player.position.x + self.player.size.x < enemy.position.x or
                     self.player.position.y > enemy.position.y + enemy.size.y or
                     self.player.position.y + self.player.size.y < enemy.position.y):
-                enemy.position = Vector2(self.game_state.world_size.x, 20)
+                rand = random.randint(self.game_state.world_size.x / 2, self.game_state.world_size.x)
+                enemy.position = Vector2(rand, 20)
 
     def render(self):
         self.window.fill((53, 129, 227))  # ФОН
