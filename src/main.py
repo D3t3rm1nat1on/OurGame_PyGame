@@ -4,6 +4,8 @@ import pygame
 from pygame.math import Vector2
 
 import src.state as states
+from command import JumpCommand, MoveCommand, MoveEnemyCommand
+from state import GameState
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -12,16 +14,17 @@ class GameWindow:
     def __init__(self):
         pygame.init()
         self.window_proportion = 1
-        self.game_state = states.GameState()
-        self.player = self.game_state.unit
-        self.window = pygame.display.set_mode((int(self.game_state.world_size.x) * self.window_proportion,
-                                               int(self.game_state.world_size.y) * self.window_proportion))
+        self.state = GameState()
+        self.player = self.state.unit
+        self.window = pygame.display.set_mode((int(self.state.world_size.x) * self.window_proportion,
+                                               int(self.state.world_size.y) * self.window_proportion))
         pygame.display.set_caption("Наша ахуенная игра")
-        pygame.display.set_icon(pygame.image.load("Pandemonica.png"))
+        pygame.display.set_icon(pygame.image.load("../assets/Pandemonica.png"))
         self.clock = pygame.time.Clock()
         self.running = True
-        self.enemies = [states.Unit(position=Vector2(self.game_state.world_size.x, 20), speed=Vector2(-4, 0))]
-        self.enemies.append(states.Unit(position=Vector2(self.game_state.world_size.x + 100, 20), speed=Vector2(-4, 0)))
+        self.enemies = [states.Unit(position=Vector2(self.state.world_size.x, 20), speed=Vector2(-4, 0))]
+        self.enemies.append(states.Unit(position=Vector2(self.state.world_size.x + 100, 20), speed=Vector2(-4, 0)))
+        self.commands = []
 
     def process_input(self):
         for event in pygame.event.get():
@@ -33,29 +36,19 @@ class GameWindow:
                     self.running = False
                     break
                 elif event.key == pygame.K_UP:
-                    if self.player.position.y + self.player.size.y >= self.game_state.ground.y:
-                        self.player.speed -= Vector2(0, 14)
+                    command = JumpCommand(self.state, self.player)
+                    self.commands.append(command)
+
+        command = MoveCommand(self.state, self.player)
+        self.commands.append(command)
 
     def update(self):
-        self.player.speed += self.game_state.gravity
-        self.player.position += self.player.speed
-        if self.player.position.y + self.player.size.y >= self.game_state.ground.y and self.player.speed.y >= 0:
-            self.player.position.y = self.game_state.ground.y - self.player.size.y
-            self.player.speed = Vector2(self.player.speed.x, 0)
+        for command in self.commands:
+            command.run()
+        self.commands.clear()
 
         for enemy in self.enemies:
-            enemy.speed += self.game_state.gravity
-            enemy.position += enemy.speed
-            if enemy.position.x <= -40:
-                enemy.position = Vector2(self.game_state.world_size.x, 20)
-            if enemy.position.y + enemy.size.y >= self.game_state.ground.y and enemy.speed.y >= 0:
-                enemy.position.y = self.game_state.ground.y - enemy.size.y
-                enemy.speed = Vector2(enemy.speed.x, 0)
-            if not (self.player.position.x > enemy.position.x + enemy.size.x or
-                    self.player.position.x + self.player.size.x < enemy.position.x or
-                    self.player.position.y > enemy.position.y + enemy.size.y or
-                    self.player.position.y + self.player.size.y < enemy.position.y):
-                enemy.position = Vector2(self.game_state.world_size.x, 20)
+            MoveEnemyCommand(self.state, enemy, self.player).run()
 
     def render(self):
         self.window.fill((53, 129, 227))  # ФОН
@@ -70,10 +63,10 @@ class GameWindow:
         for enemy_collision in enemy_collisions:
             pygame.draw.rect(self.window, (140, 10, 13), enemy_collision)
         ground_level = (
-            int(self.game_state.ground.x) * self.window_proportion,
-            int(self.game_state.ground.y) * self.window_proportion,
-            int(self.game_state.world_size.x) * self.window_proportion,
-            int(self.game_state.world_size.y) * self.window_proportion)
+            int(self.state.ground.x) * self.window_proportion,
+            int(self.state.ground.y) * self.window_proportion,
+            int(self.state.world_size.x) * self.window_proportion,
+            int(self.state.world_size.y) * self.window_proportion)
         pygame.draw.rect(self.window, (166, 111, 0), ground_level)
         pygame.display.update()
 
