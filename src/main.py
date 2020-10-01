@@ -14,6 +14,7 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 class GameWindow:
     def __init__(self):
         pygame.init()
+        self.score = 0
         self.window_proportion = 1
         self.state = GameState()
         self.player = self.state.unit
@@ -51,7 +52,7 @@ class GameWindow:
         self.commands.clear()
 
         for enemy in self.enemies:
-            MoveEnemyCommand(self.state, enemy, self.player).run()
+            self.score += MoveEnemyCommand(self.state, enemy, self.player).run()
 
     def render(self):
         self.window.fill((53, 129, 227))  # ФОН
@@ -60,7 +61,7 @@ class GameWindow:
         enemy_collisions = []
         for enemy in self.enemies:
             enemy_collisions.append([int(x) for x in
-                            (enemy.position.x, enemy.position.y, enemy.size.x, enemy.size.y)])
+                                     (enemy.position.x, enemy.position.y, enemy.size.x, enemy.size.y)])
 
         pygame.draw.rect(self.window, (73, 111, 13), player_collision)
         for enemy_collision in enemy_collisions:
@@ -71,6 +72,8 @@ class GameWindow:
             int(self.state.world_size.x) * self.window_proportion,
             int(self.state.world_size.y) * self.window_proportion)
         pygame.draw.rect(self.window, (166, 111, 0), ground_level)
+        text = "Score: " + str(self.score)
+        self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)), (0, 0))
         pygame.display.update()
 
     def run(self):
