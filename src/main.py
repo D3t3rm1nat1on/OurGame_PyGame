@@ -4,7 +4,7 @@ import pygame
 from pygame.math import Vector2
 
 import src.state as states
-from command import JumpCommand, MoveCommand
+from command import JumpCommand, MoveCommand, MoveEnemyCommand
 from state import GameState
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -19,7 +19,7 @@ class GameWindow:
         self.window = pygame.display.set_mode((int(self.state.world_size.x) * self.window_proportion,
                                                int(self.state.world_size.y) * self.window_proportion))
         pygame.display.set_caption("Наша ахуенная игра")
-        pygame.display.set_icon(pygame.image.load("Pandemonica.png"))
+        pygame.display.set_icon(pygame.image.load("../assets/Pandemonica.png"))
         self.clock = pygame.time.Clock()
         self.running = True
         self.enemies = [states.Unit(position=Vector2(self.state.world_size.x, 20), speed=Vector2(-4, 0))]
@@ -48,18 +48,7 @@ class GameWindow:
         self.commands.clear()
 
         for enemy in self.enemies:
-            enemy.speed += self.state.gravity
-            enemy.position += enemy.speed
-            if enemy.position.x <= -40:
-                enemy.position = Vector2(self.state.world_size.x, 20)
-            if enemy.position.y + enemy.size.y >= self.state.ground.y and enemy.speed.y >= 0:
-                enemy.position.y = self.state.ground.y - enemy.size.y
-                enemy.speed = Vector2(enemy.speed.x, 0)
-            if not (self.player.position.x > enemy.position.x + enemy.size.x or
-                    self.player.position.x + self.player.size.x < enemy.position.x or
-                    self.player.position.y > enemy.position.y + enemy.size.y or
-                    self.player.position.y + self.player.size.y < enemy.position.y):
-                enemy.position = Vector2(self.state.world_size.x, 20)
+            MoveEnemyCommand(self.state, enemy, self.player).run()
 
     def render(self):
         self.window.fill((53, 129, 227))  # ФОН
