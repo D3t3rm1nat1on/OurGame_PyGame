@@ -1,3 +1,5 @@
+import random
+
 from pygame.math import Vector2
 
 from .MoveCommand import MoveCommand
@@ -10,10 +12,12 @@ class MoveEnemyCommand(MoveCommand):
 
     def run(self):
         super().run()
-        if self.unit.position.x <= 40:
-            self.unit.position = Vector2(self.state.world_size.x, 28)
+        if self.unit.position.x <= -40:
+            rand = random.randint(self.state.world_size.x / 2, self.state.world_size.x)
+            self.unit.position = Vector2(rand, 20)
         if not (self.unit2.position.x > self.unit.position.x + self.unit.size.x or
                 self.unit2.position.x + self.unit2.size.x < self.unit.position.x or
                 self.unit2.position.y > self.unit.position.y + self.unit.size.y or
                 self.unit2.position.y + self.unit2.size.y < self.unit.position.y):
-            self.unit.position = Vector2(self.state.world_size.x, 20)
+            rand = random.randint(self.state.world_size.x / 2, self.state.world_size.x)
+            self.unit.position = Vector2(rand, 20)

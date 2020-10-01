@@ -24,8 +24,10 @@ class GameWindow:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        self.enemies = [states.Unit(position=Vector2(self.game_state.world_size.x, 20), speed=Vector2(-8, 0))]
-        self.enemies.append(states.Unit(position=Vector2(self.game_state.world_size.x + 100, 20), speed=Vector2(-8, 0)))
+        self.enemies = [states.Unit(position=Vector2(self.state.world_size.x, 20), speed=Vector2(-8, 0))]
+        self.enemies.append(states.Unit(position=Vector2(self.state.world_size.x + 100, 20), speed=Vector2(-8, 0)))
+
+        self.commands = []
 
     def process_input(self):
         for event in pygame.event.get():
@@ -49,20 +51,7 @@ class GameWindow:
         self.commands.clear()
 
         for enemy in self.enemies:
-            enemy.speed += self.game_state.gravity
-            enemy.position += enemy.speed
-            if enemy.position.x <= -40:
-                rand = random.randint(self.game_state.world_size.x / 2, self.game_state.world_size.x)
-                enemy.position = Vector2(rand, 20)
-            if enemy.position.y + enemy.size.y >= self.game_state.ground.y and enemy.speed.y >= 0:
-                enemy.position.y = self.game_state.ground.y - enemy.size.y
-                enemy.speed = Vector2(enemy.speed.x, 0)
-            if not (self.player.position.x > enemy.position.x + enemy.size.x or
-                    self.player.position.x + self.player.size.x < enemy.position.x or
-                    self.player.position.y > enemy.position.y + enemy.size.y or
-                    self.player.position.y + self.player.size.y < enemy.position.y):
-                rand = random.randint(self.game_state.world_size.x / 2, self.game_state.world_size.x)
-                enemy.position = Vector2(rand, 20)
+            MoveEnemyCommand(self.state, enemy, self.player).run()
 
     def render(self):
         self.window.fill((53, 129, 227))  # ФОН
