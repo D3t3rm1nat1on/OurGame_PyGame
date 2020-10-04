@@ -5,7 +5,7 @@ import pygame
 from pygame.math import Vector2
 
 import src.state as states
-from src.command import JumpCommand, MoveCommand, MoveEnemyCommand, CrouchCommand
+from src.command import JumpCommand, MoveCommand, MoveEnemyCommand, CrouchCommand, SprintCommand
 from src.state import GameState
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -46,11 +46,20 @@ class GameWindow:
                 elif event.key == pygame.K_DOWN:
                     command = CrouchCommand.CrouchCommand(self.state, self.player)
                     self.commands.append(command)
+                elif event.key == pygame.K_RIGHT:
+                    command = SprintCommand.SprintCommand(self.state, self.player)
+                    self.commands.append(command)
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
-                    self.player.is_crouching = False
-                    self.player.rect_collision.size = self.player.size
-                    self.player.position.y -= self.player.size.y - self.player.crouch_size.y
+                    if self.player.is_crouching:
+                        self.player.is_crouching = False
+                        self.player.rect_collision.size = self.player.size
+                        self.player.position.y -= self.player.size.y - self.player.crouch_size.y
+                        self.player.speed.x += 1
+                if event.key == pygame.K_RIGHT:
+                    if self.player.is_sprinting:
+                        self.player.is_sprinting = False
+                        self.player.speed.x -= 1
 
         command = MoveCommand(self.state, self.player)
         self.commands.append(command)

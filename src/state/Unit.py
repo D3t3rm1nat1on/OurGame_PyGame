@@ -12,3 +12,5 @@ class Unit:
         self.rect_collision = pygame.Rect(position, size)
         self.crouch_size = Vector2(size.x, size.y / 2)
         self.is_crouching = False
+        self.is_sprinting = False
+        self.is_slowing = False
