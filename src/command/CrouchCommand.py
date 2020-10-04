@@ -9,7 +9,7 @@ class CrouchCommand(Command):
         self.unit = unit
 
     def run(self):
-        if not self.unit.is_crouching and self.unit.position.y + self.unit.rect_collision.size[1] >= self.state.ground.y:
+        if not self.unit.is_crouching and self.on_ground(self.state, self.unit):
             self.unit.rect_collision.size = self.unit.crouch_size
             self.unit.position.y += self.unit.size.y - self.unit.crouch_size.y
             self.unit.speed.x -= 1
