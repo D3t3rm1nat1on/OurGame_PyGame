@@ -10,5 +10,5 @@ class SprintCommand(Command):
 
     def run(self):
         if not self.unit.is_sprinting:
-            self.unit.speed.x += 1
+            self.unit.speed.x += 2
             self.unit.is_sprinting = True

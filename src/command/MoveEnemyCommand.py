@@ -13,7 +13,7 @@ class MoveEnemyCommand(MoveCommand):
     def run(self):
         super().run()
         # враг ушел за экран (успешный dodge)
-        if self.unit.rect_collision.right <= -self.unit.size.x:
+        if self.unit.rect_collision.right <= -self.unit.full_size.x:
             rand = random.randint(self.state.world_size.x / 2, self.state.world_size.x)
             self.unit.position = Vector2(rand, 20)
             return 1
