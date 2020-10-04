@@ -5,7 +5,7 @@ import pygame
 from pygame.math import Vector2
 
 import src.state as states
-from src.command import JumpCommand, MoveCommand, MoveEnemyCommand
+from src.command import JumpCommand, MoveCommand, MoveEnemyCommand, CrouchCommand
 from src.state import GameState
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -18,7 +18,7 @@ class GameWindow:
         self.window_proportion = 1
         self.state = GameState()
         self.state.ground = pygame.Rect(self.state.ground, self.state.world_size)
-        self.player = states.Unit()
+        self.player = states.Unit(size=Vector2(40, 80))
         self.window = pygame.display.set_mode((int(self.state.world_size.x) * self.window_proportion,
                                                int(self.state.world_size.y) * self.window_proportion))
         pygame.display.set_caption("Наша ахуенная игра")
@@ -43,6 +43,14 @@ class GameWindow:
                 elif event.key == pygame.K_UP:
                     command = JumpCommand(self.state, self.player)
                     self.commands.append(command)
+                elif event.key == pygame.K_DOWN:
+                    command = CrouchCommand.CrouchCommand(self.state, self.player)
+                    self.commands.append(command)
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_DOWN:
+                    self.player.is_crouching = False
+                    self.player.rect_collision.size = self.player.size
+                    self.player.position.y -= self.player.size.y - self.player.crouch_size.y
 
         command = MoveCommand(self.state, self.player)
         self.commands.append(command)
