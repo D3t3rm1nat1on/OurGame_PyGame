@@ -9,5 +9,5 @@ class JumpCommand(Command):
         self.unit = unit
 
     def run(self):
-        if self.unit.position.y + self.unit.size.y >= self.state.ground.y:
+        if self.on_ground(self.state, self.unit):
             self.unit.speed -= Vector2(0, 14)

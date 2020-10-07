@@ -6,20 +6,22 @@ from .MoveCommand import MoveCommand
 
 
 class MoveEnemyCommand(MoveCommand):
-    def __init__(self, state, unit1, unit2):
+    def __init__(self, state, unit1, player_unit):
         super().__init__(state, unit1)
-        self.unit2 = unit2
+        self.player_unit = player_unit
 
     def run(self):
         super().run()
-        if self.unit.position.x <= -40:
+        # враг ушел за экран (успешный dodge)
+        if self.unit.rect_collision.right <= -self.unit.full_size.x:
             rand = random.randint(self.state.world_size.x / 2, self.state.world_size.x)
-            self.unit.position = Vector2(rand, 20)
+            self.unit.position = Vector2(rand, self.state.ground.y - 100)
             return 1
-        if not (self.unit2.position.x > self.unit.position.x + self.unit.size.x or
-                self.unit2.position.x + self.unit2.size.x < self.unit.position.x or
-                self.unit2.position.y > self.unit.position.y + self.unit.size.y or
-                self.unit2.position.y + self.unit2.size.y < self.unit.position.y):
+        # враг ударил игрока
+        if self.unit.rect_collision.colliderect(self.player_unit.rect_collision):
             rand = random.randint(self.state.world_size.x / 2, self.state.world_size.x)
-            self.unit.position = Vector2(rand, 20)
+            self.unit.position = Vector2(rand, self.state.ground.y - 100)
+            self.player_unit.position.x -= 20
+            if self.player_unit.position.x < 0:
+                print("LOG: PakeT T H I C C")
         return 0
