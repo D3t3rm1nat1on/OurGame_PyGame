@@ -9,7 +9,8 @@ class MoveCommand(Command):
         self.unit = unit
 
     def run(self):
-        self.unit.speed += self.state.gravity
+        if self.unit.affected_by_gravity:
+            self.unit.speed += self.state.gravity
         self.unit.position += self.unit.speed
         if self.on_ground(self.state, self.unit) and self.unit.speed.y >= 0:
             self.unit.position.y = self.state.ground.y - self.unit.rect_collision.size[1]

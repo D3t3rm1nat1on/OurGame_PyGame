@@ -26,7 +26,9 @@ class GameWindow:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        self.enemies = [states.Unit(position=Vector2(self.state.world_size.x, 20), speed=Vector2(-6, 0))]
+        self.enemies = [
+            states.Unit(position=Vector2(self.state.world_size.x, self.state.ground.y - 100), speed=Vector2(-6, 0),
+                        full_size=Vector2(50, 50), affected_by_gravity=False)]
         self.enemies.append(states.Unit(position=Vector2(self.state.world_size.x + 100, 20), speed=Vector2(-8, 0)))
 
         self.commands = []
@@ -44,10 +46,10 @@ class GameWindow:
                     command = JumpCommand(self.state, self.player)
                     self.commands.append(command)
                 elif event.key == pygame.K_DOWN:
-                    command = CrouchCommand.CrouchCommand(self.state, self.player)
+                    command = CrouchCommand(self.state, self.player)
                     self.commands.append(command)
                 elif event.key == pygame.K_RIGHT:
-                    command = SprintCommand.SprintCommand(self.state, self.player)
+                    command = SprintCommand(self.state, self.player)
                     self.commands.append(command)
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
@@ -61,7 +63,7 @@ class GameWindow:
                         self.player.is_sprinting = False
                         self.player.speed.x -= 2
 
-        command = MovePlayerCommand.MovePlayerCommand(self.state, self.player)
+        command = MovePlayerCommand(self.state, self.player)
         self.commands.append(command)
 
     def update(self):
@@ -74,6 +76,12 @@ class GameWindow:
 
     def render(self):
         self.window.fill((53, 129, 227))
+
+        pygame.draw.line(self.window, (0, 0, 0), start_pos=(self.state.border_left, 0),
+                         end_pos=(self.state.border_left, self.state.world_size.y))
+        pygame.draw.line(self.window, (0, 0, 0), start_pos=(self.state.border_right, 0),
+                         end_pos=(self.state.border_right, self.state.world_size.y))
+
         player_collision = self.player.rect_collision
         enemy_collisions = []
         for enemy in self.enemies:
