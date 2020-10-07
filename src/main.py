@@ -76,10 +76,10 @@ class GameWindow:
     def render(self):
         self.window.fill((53, 129, 227))
 
-        pygame.draw.line(self.window, (0, 0, 0), start_pos=(self.state.border_left, 0),
-                         end_pos=(self.state.border_left, self.state.world_size.y))
-        pygame.draw.line(self.window, (0, 0, 0), start_pos=(self.state.border_right, 0),
-                         end_pos=(self.state.border_right, self.state.world_size.y))
+        pygame.draw.line(self.window, (0, 0, 0), (self.state.border_left, 0),
+                         (self.state.border_left, self.state.world_size.y))
+        pygame.draw.line(self.window, (0, 0, 0), (self.state.border_right, 0),
+                         (self.state.border_right, self.state.world_size.y))
 
         player_collision = self.player.rect_collision
         enemy_collisions = []
