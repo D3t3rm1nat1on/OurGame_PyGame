@@ -1,7 +1,5 @@
 from pygame.math import Vector2
 
-from .Unit import Unit
-
 
 class GameState:
     def __init__(self):
