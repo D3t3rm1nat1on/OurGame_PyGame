@@ -1,11 +1,10 @@
 import os
-import random
 
 import pygame
 from pygame.math import Vector2
 
 import src.state as states
-from src.command import JumpCommand, MoveCommand, MovePlayerCommand, MoveEnemyCommand, CrouchCommand, SprintCommand
+from src.command import JumpCommand, MovePlayerCommand, MoveEnemyCommand, CrouchCommand, SprintCommand
 from src.state import GameState
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
