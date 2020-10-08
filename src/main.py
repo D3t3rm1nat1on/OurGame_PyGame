@@ -13,7 +13,6 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 class GameWindow:
     def __init__(self):
         pygame.init()
-        self.score = 0
         self.window_proportion = 1
         self.state = GameState()
         self.state.ground = pygame.Rect(self.state.ground, self.state.world_size)
@@ -71,7 +70,12 @@ class GameWindow:
         self.commands.clear()
 
         for enemy in self.enemies:
-            self.score += MoveEnemyCommand(self.state, enemy, self.player).run()
+            MoveEnemyCommand(self.state, enemy, self.player).run()
+
+        for enemy in self.enemies:
+            if not enemy.is_alive:
+                self.enemies.remove(enemy)
+
 
     def render(self):
         self.window.fill((53, 129, 227))
@@ -98,7 +102,7 @@ class GameWindow:
         ground_color = (166, 111, 0)
         pygame.draw.rect(self.window, ground_color, ground)
 
-        text = "Score: " + str(self.score)
+        text = "Score: " + str(self.state.score)
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)), (0, 0))
 
         pygame.display.update()

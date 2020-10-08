@@ -16,12 +16,12 @@ class MoveEnemyCommand(MoveCommand):
         if self.unit.rect_collision.right <= -self.unit.full_size.x:
             rand = random.randint(self.state.world_size.x / 2, self.state.world_size.x)
             self.unit.position = Vector2(rand, self.state.ground.y - 100)
-            return 1
+            self.state.score += 1
         # враг ударил игрока
         if self.unit.rect_collision.colliderect(self.player_unit.rect_collision):
             rand = random.randint(self.state.world_size.x / 2, self.state.world_size.x)
-            self.unit.position = Vector2(rand, self.state.ground.y - 100)
+            #self.unit.position = Vector2(rand, self.state.ground.y - 100)s
+            self.unit.is_alive = False
             self.player_unit.position.x -= 20
             if self.player_unit.position.x < 0:
                 print("LOG: PakeT T H I C C")
-        return 0

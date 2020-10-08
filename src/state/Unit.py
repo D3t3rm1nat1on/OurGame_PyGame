@@ -6,6 +6,7 @@ import pygame
 class Unit:
     def __init__(self, position=Vector2(10, 20), speed=Vector2(0, 0), full_size=Vector2(40, 80),
                  affected_by_gravity=True):
+        self.is_alive = True
         self.position = position
         self.speed = speed
         self.delta_speed = Vector2(0, 0)
