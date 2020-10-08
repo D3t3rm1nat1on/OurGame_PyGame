@@ -9,15 +9,16 @@ class Menu:
         pygame.display.set_caption('Welcome to the club, buddy')
         self.clock = pygame.time.Clock()
         self.running = True
-        self.theme = 1
+        self.theme = 0
         self.color = [
             [(255, 20, 147), (176, 255, 46)],
             [(176, 255, 46), (255, 20, 147)]]
         self.settings = Settings()
         self.text_theme = [
-            [self.color[self.theme][0], (0, 0, 190, 40), 'Back', (0, 0), False, 1],
-            [self.color[self.theme][0], (150, 90, 500, 40), "Shine like a princess", (300, 90), False, -1, 0, True],
-            [self.color[self.theme][0], (150, 150, 500, 40), "Toxic frogs", (300, 150), False, -1, 1, True]
+            [self.color[self.theme][0], (0, 0, 190, 40), 'Back', (0, 0), False, 1, False],
+            [self.color[self.theme][0], (150, 90, 500, 40), "Shine like a princess", (300, 90), False, -1, True, 0],
+            # тема, координаты прямоуг., название, коор. текста, выделение кнопки, переход в другой рендер, доступна ли, номер темы
+            [self.color[self.theme][0], (150, 150, 500, 40), "Toxic frogs", (300, 150), False, -1, True, 1]
         ]
         self.text = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Let's go!", (300, 90), False, 140800],
@@ -39,6 +40,7 @@ class Menu:
         self.renders = [self.render0, self.render1, 2, 3, 4, self.render5]
 
     def button(self, color_rect, coordinates, text, start_text):
+        color_rect = self.color[self.theme][0]
         pygame.draw.rect(self.window, color_rect, coordinates)
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)),
                          start_text)
@@ -103,8 +105,10 @@ class Menu:
                 else:
                     if self.num_ren == 1:
                         self.into_new_render(x, y, self.text_settings)
-                    if self.num_ren == 5:
-                        self.into_new_render(x, y, self.text_theme)
+                    else:
+                        if self.num_ren == 5:
+                            self.into_new_render(x, y, self.text_theme)
+                            self.change_theme(x, y)
 
                 if self.num_ren == 1 and 110 <= x <= 150 and 90 <= y <= 130:
                     self.settings.lower_sound()
@@ -118,7 +122,8 @@ class Menu:
         for el in self.text_theme:
             if el[1][0] <= x <= (el[1][0] + el[1][2]) and el[1][1] <= y <= (el[1][3] + el[1][1]):
                 if el[6]:
-                    self.theme = el[5]
+                    self.theme = el[7]
+                    self.render5()
 
     def chosen_button(self, x, y, temp):
         for el in temp:
