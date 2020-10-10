@@ -1,10 +1,11 @@
 import os
 
 import pygame
+import math
 from pygame.math import Vector2
 
 import src.state as states
-from src.command import JumpCommand, MovePlayerCommand, MoveEnemyCommand, CrouchCommand, SprintCommand
+from src.command import JumpCommand, MoveCommand, MovePlayerCommand, MoveEnemyCommand, CrouchCommand, SprintCommand
 from src.state import GameState
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -28,6 +29,12 @@ class GameWindow:
             states.Unit(position=Vector2(self.state.world_size.x, self.state.ground.y - 100), speed=Vector2(-6, 0),
                         full_size=Vector2(50, 50), affected_by_gravity=False)]
         self.enemies.append(states.Unit(position=Vector2(self.state.world_size.x + 100, 20), speed=Vector2(-8, 0)))
+
+        self.test = states.Unit(position=(self.state.world_size.x, self.state.ground.y), speed=Vector2(0, 0),
+                                full_size=Vector2(20, 20),
+                                affected_by_gravity=False)
+        self.test.const_speed = Vector2(-4, 0)
+        self.angle = 0
 
         self.commands = []
 
@@ -76,6 +83,15 @@ class GameWindow:
             if not enemy.is_alive:
                 self.enemies.remove(enemy)
 
+        print(self.test.speed)
+        print(self.test.position)
+        print(self.test.rect_collision)
+        self.angle += 5
+        cos = math.cos(math.radians(self.angle))
+        sin = math.sin(math.radians(self.angle))
+        self.test.rad_speed = 2 * Vector2(cos, sin)
+        self.test.speed = self.test.const_speed + self.test.rad_speed
+        MoveEnemyCommand(self.state, self.test, self.player).run()
 
     def render(self):
         self.window.fill((53, 129, 227))
@@ -104,6 +120,8 @@ class GameWindow:
 
         text = "Score: " + str(self.state.score)
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)), (0, 0))
+
+        pygame.draw.rect(self.window, (0, 0, 0), self.test.rect_collision)
 
         pygame.display.update()
 

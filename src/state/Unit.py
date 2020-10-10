@@ -6,6 +6,13 @@ import pygame
 class Unit:
     def __init__(self, position=Vector2(10, 20), speed=Vector2(0, 0), full_size=Vector2(40, 80),
                  affected_by_gravity=True):
+        """
+
+        :type speed: Vector2
+        :type position Vector2
+        :type full_size Vector2
+        :type affected_by_gravity bool
+        """
         self.is_alive = True
         self.position = position
         self.speed = speed
