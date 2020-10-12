@@ -7,10 +7,11 @@ class MovePlayerCommand(MoveCommand):
 
     def run(self):
         super().run()
+        player = self.unit
         # зона игрока
-        if self.unit.rect_collision.left <= self.state.border_left:
-            self.unit.position.x = self.state.border_left
-        if self.unit.rect_collision.right >= self.state.border_right:
-            self.unit.position.x = self.state.border_right - self.unit.rect_collision.size[0]
+        if player.rect_collision.left <= self.state.border_left:
+            player.position.x = self.state.border_left
+        if player.rect_collision.right >= self.state.border_right:
+            player.position.x = self.state.border_right - self.unit.rect_collision.size[0]
 
 

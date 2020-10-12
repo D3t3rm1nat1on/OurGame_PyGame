@@ -20,23 +20,24 @@ class GameWindow:
         self.player = states.Unit(full_size=Vector2(40, 80))
         self.window = pygame.display.set_mode((int(self.state.world_size.x) * self.window_proportion,
                                                int(self.state.world_size.y) * self.window_proportion))
-        pygame.display.set_caption("Наша ахуенная игра")
+        pygame.display.set_caption("Наша игра")
         pygame.display.set_icon(pygame.image.load("../assets/Pandemonica.png"))
         self.clock = pygame.time.Clock()
         self.running = True
 
-        self.enemies = [
-            states.Unit(position=Vector2(self.state.world_size.x, self.state.ground.y - 100), speed=Vector2(-6, 0),
-                        full_size=Vector2(50, 50), affected_by_gravity=False)]
-        self.enemies.append(states.Unit(position=Vector2(self.state.world_size.x + 100, 20), speed=Vector2(-8, 0)))
+        self.state.enemies.append(states.Unit(position=Vector2(self.state.world_size.x + 100, 20), speed=Vector2(-8, 0)))
+        self.state.enemies.append(states.Unit(position=Vector2(self.state.world_size.x, self.state.ground.y - 100), speed=Vector2(-6, 0),
+                        full_size=Vector2(50, 50), affected_by_gravity=False))
 
         self.test = states.Unit(position=(self.state.world_size.x, self.state.ground.y), speed=Vector2(0, 0),
-                                full_size=Vector2(20, 20),
+                                full_size=Vector2(20, 20), type='bird',
                                 affected_by_gravity=False)
         self.test.const_speed = Vector2(-4, 0)
-        self.angle = 0
+        self.test.angle = 0
 
         self.commands = []
+        self.player.type = 'bird'
+        self.player.angle = 0
 
     def process_input(self):
         for event in pygame.event.get():
@@ -76,21 +77,13 @@ class GameWindow:
             command.run()
         self.commands.clear()
 
-        for enemy in self.enemies:
+        for enemy in self.state.enemies:
             MoveEnemyCommand(self.state, enemy, self.player).run()
 
-        for enemy in self.enemies:
+        for enemy in self.state.enemies:
             if not enemy.is_alive:
-                self.enemies.remove(enemy)
+                self.state.enemies.remove(enemy)
 
-        print(self.test.speed)
-        print(self.test.position)
-        print(self.test.rect_collision)
-        self.angle += 5
-        cos = math.cos(math.radians(self.angle))
-        sin = math.sin(math.radians(self.angle))
-        self.test.rad_speed = 2 * Vector2(cos, sin)
-        self.test.speed = self.test.const_speed + self.test.rad_speed
         MoveEnemyCommand(self.state, self.test, self.player).run()
 
     def render(self):
@@ -103,7 +96,7 @@ class GameWindow:
 
         player_collision = self.player.rect_collision
         enemy_collisions = []
-        for enemy in self.enemies:
+        for enemy in self.state.enemies:
             enemy_collisions.append(enemy.rect_collision)
 
         pygame.draw.rect(self.window, (73, 111, 13), player_collision, 3)

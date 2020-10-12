@@ -9,6 +9,7 @@ class MoveCommand(Command):
         self.unit = unit
 
     def run(self):
+        self.unique_movement()
         if self.unit.affected_by_gravity:
             self.unit.speed += self.state.gravity
         self.unit.position += self.unit.speed
@@ -16,3 +17,6 @@ class MoveCommand(Command):
             self.unit.position.y = self.state.ground.y - self.unit.rect_collision.size[1]
             self.unit.speed = Vector2(self.unit.speed.x, 0)
         self.unit.rect_collision.topleft = self.unit.position
+
+    def unique_movement(self):
+        pass
