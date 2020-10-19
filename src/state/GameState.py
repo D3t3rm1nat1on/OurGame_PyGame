@@ -1,10 +1,18 @@
-from typing import List, Any
+from typing import List
 
 from pygame.math import Vector2
-from src.state import Unit
+
+from .Unit import Unit
+
 
 class GameState:
-
+    border_right: int
+    border_left: int
+    gravity: Vector2
+    ground: Vector2
+    world_size: Vector2
+    score: int
+    enemies: List[Unit]
     player: Unit
 
     def __init__(self):
@@ -15,5 +23,5 @@ class GameState:
         self.border_left = 0
         self.border_right = 300
 
-        self.player = Unit.Unit(full_size=Vector2(40, 80))
+        self.player = Unit(full_size=Vector2(40, 80))
         self.enemies = []

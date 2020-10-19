@@ -1,9 +1,23 @@
 from pygame.math import Vector2
 
 import pygame
+from pygame.rect import RectType
 
 
 class Unit:
+    type: str
+    position: Vector2
+    is_alive: bool
+    speed: Vector2
+    delta_speed: Vector2
+    full_size: Vector2
+    rect_collision: RectType
+    crouch_size: Vector2
+    is_crouching: bool
+    is_sprinting: bool
+    is_slowing: bool
+    affected_by_gravity: bool
+
     def __init__(self, position=Vector2(10, 20), speed=Vector2(0, 0), full_size=Vector2(40, 80),
                  affected_by_gravity=True, type='standart'):
         """
