@@ -5,7 +5,6 @@ from pygame.rect import RectType
 
 
 class Unit:
-    type: str
     position: Vector2
     is_alive: bool
     speed: Vector2
@@ -19,7 +18,7 @@ class Unit:
     affected_by_gravity: bool
 
     def __init__(self, position=Vector2(10, 20), speed=Vector2(0, 0), full_size=Vector2(40, 80),
-                 affected_by_gravity=True, type='standart'):
+                 affected_by_gravity=True):
         """
 
         :type speed: Vector2
@@ -27,7 +26,6 @@ class Unit:
         :type full_size Vector2
         :type affected_by_gravity bool
         """
-        self.type = type
         self.is_alive = True
         self.position = position
         self.speed = speed
@@ -39,3 +37,6 @@ class Unit:
         self.is_sprinting = False
         self.is_slowing = False
         self.affected_by_gravity = affected_by_gravity
+
+    def unique_movement(self):
+        pass

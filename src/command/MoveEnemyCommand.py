@@ -28,11 +28,5 @@ class MoveEnemyCommand(MoveCommand):
             if self.player_unit.position.x < 0:
                 print("LOG: PakeT T H I C C")
 
-    def unique_movement(self):
-        if self.unit.type == 'bird':
-            self.unit.angle += 5
-            cos = math.cos(math.radians(self.unit.angle))
-            sin = math.sin(math.radians(self.unit.angle))
-            self.unit.rad_speed = 2 * Vector2(cos, sin)
-            self.unit.speed = self.unit.const_speed + self.unit.rad_speed
+
 

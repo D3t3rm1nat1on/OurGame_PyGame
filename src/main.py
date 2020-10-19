@@ -28,16 +28,13 @@ class GameWindow:
         self.state.enemies.append(states.Unit(position=Vector2(self.state.world_size.x + 100, 20), speed=Vector2(-8, 0)))
         self.state.enemies.append(states.Unit(position=Vector2(self.state.world_size.x, self.state.ground.y - 100), speed=Vector2(-6, 0),
                         full_size=Vector2(50, 50), affected_by_gravity=False))
+        bird = states.UnitBird(position=Vector2(self.state.world_size.x, self.state.ground.y - 100), speed=Vector2(-6, 0),
+                        full_size=Vector2(25, 25), affected_by_gravity=False)
+        self.state.enemies.append(bird)
 
-        self.test = states.Unit(position=(self.state.world_size.x, self.state.ground.y), speed=Vector2(0, 0),
-                                full_size=Vector2(20, 20), type='bird',
-                                affected_by_gravity=False)
-        self.test.const_speed = Vector2(-4, 0)
-        self.test.angle = 0
+
 
         self.commands = []
-        self.player.type = 'bird'
-        self.player.angle = 0
 
     def process_input(self):
         for event in pygame.event.get():
@@ -84,7 +81,6 @@ class GameWindow:
             if not enemy.is_alive:
                 self.state.enemies.remove(enemy)
 
-        MoveEnemyCommand(self.state, self.test, self.player).run()
 
     def render(self):
         self.window.fill((53, 129, 227))
@@ -113,8 +109,6 @@ class GameWindow:
 
         text = "Score: " + str(self.state.score)
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)), (0, 0))
-
-        pygame.draw.rect(self.window, (0, 0, 0), self.test.rect_collision)
 
         pygame.display.update()
 
