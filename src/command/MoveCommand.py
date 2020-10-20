@@ -1,9 +1,15 @@
 from pygame.math import Vector2
 
 from .Command import Command
+from src.state import Unit
+from src.state import GameState
 
 
 class MoveCommand(Command):
+
+    unit: Unit
+    state: GameState
+
     def __init__(self, state, unit):
         self.state = state
         self.unit = unit

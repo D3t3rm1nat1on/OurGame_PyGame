@@ -17,7 +17,7 @@ class GameWindow:
         self.window_proportion = 1
         self.state = GameState()
         self.state.ground = pygame.Rect(self.state.ground, self.state.world_size)
-        self.player = states.Unit(full_size=Vector2(40, 80))
+        self.player = states.Player(full_size=Vector2(40, 80), max_speed_x=10, affected_by_gravity=True)
         self.window = pygame.display.set_mode((int(self.state.world_size.x) * self.window_proportion,
                                                int(self.state.world_size.y) * self.window_proportion))
         pygame.display.set_caption("Наша игра")
@@ -25,14 +25,20 @@ class GameWindow:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        self.state.enemies.append(states.Unit(position=Vector2(self.state.world_size.x + 100, 20), speed=Vector2(-8, 0)))
-        self.state.enemies.append(states.Unit(position=Vector2(self.state.world_size.x, self.state.ground.y - 100), speed=Vector2(-6, 0),
+        self.state.enemies.append(
+            states.Unit(position=Vector2(self.state.world_size.x + 100, 20), speed=Vector2(-8, 0)))
+        self.state.enemies.append(
+            states.Unit(position=Vector2(self.state.world_size.x, self.state.ground.y - 100), speed=Vector2(-6, 0),
                         full_size=Vector2(50, 50), affected_by_gravity=False))
-        bird = states.UnitBird(position=Vector2(self.state.world_size.x, self.state.ground.y - 100), speed=Vector2(-6, 0),
-                        full_size=Vector2(25, 25), affected_by_gravity=False)
+        bird = states.UnitBird(position=Vector2(self.state.world_size.x, self.state.ground.y - 100),
+                               speed=Vector2(-6, 0),
+                               full_size=Vector2(25, 25), affected_by_gravity=False)
         self.state.enemies.append(bird)
 
-
+        bomb = states.UnitBirdBomb(position=Vector2(self.state.world_size.x, self.state.ground.y - 100),
+                                   speed=Vector2(-3, 0),
+                                   full_size=Vector2(100, 100), affected_by_gravity=False)
+        self.state.enemies.append(bomb)
 
         self.commands = []
 
@@ -76,11 +82,6 @@ class GameWindow:
 
         for enemy in self.state.enemies:
             MoveEnemyCommand(self.state, enemy, self.player).run()
-
-        for enemy in self.state.enemies:
-            if not enemy.is_alive:
-                self.state.enemies.remove(enemy)
-
 
     def render(self):
         self.window.fill((53, 129, 227))
