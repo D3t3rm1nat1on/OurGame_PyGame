@@ -36,7 +36,7 @@ class GameWindow:
         self.state.enemies.append(bird)
 
         bomb = states.UnitBirdBomb(position=Vector2(self.state.world_size.x, self.state.ground.y - 100),
-                                   speed=Vector2(-3, 0),
+                                   speed=Vector2(-5, 0),
                                    full_size=Vector2(100, 100), affected_by_gravity=False)
         self.state.enemies.append(bomb)
 
@@ -86,6 +86,14 @@ class GameWindow:
     def render(self):
         self.window.fill((53, 129, 227))
 
+        ground = pygame.Rect(
+            int(self.state.ground.x) * self.window_proportion,
+            int(self.state.ground.y) * self.window_proportion,
+            int(self.state.world_size.x) * self.window_proportion,
+            int(self.state.world_size.y) * self.window_proportion)
+        ground_color = (166, 111, 0)
+        pygame.draw.rect(self.window, ground_color, ground)
+
         pygame.draw.line(self.window, (0, 0, 0), (self.state.border_left, 0),
                          (self.state.border_left, self.state.world_size.y))
         pygame.draw.line(self.window, (0, 0, 0), (self.state.border_right, 0),
@@ -99,14 +107,6 @@ class GameWindow:
         pygame.draw.rect(self.window, (73, 111, 13), player_collision, 3)
         for enemy_collision in enemy_collisions:
             pygame.draw.rect(self.window, (140, 10, 13), enemy_collision, 3)
-
-        ground = pygame.Rect(
-            int(self.state.ground.x) * self.window_proportion,
-            int(self.state.ground.y) * self.window_proportion,
-            int(self.state.world_size.x) * self.window_proportion,
-            int(self.state.world_size.y) * self.window_proportion)
-        ground_color = (166, 111, 0)
-        pygame.draw.rect(self.window, ground_color, ground)
 
         text = "Score: " + str(self.state.score)
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)), (0, 0))

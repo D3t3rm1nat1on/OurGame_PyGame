@@ -21,6 +21,10 @@ class MoveEnemyCommand(MoveCommand):
             rand = random.randint(self.state.world_size.x / 2, self.state.world_size.x)
             enemy.position = Vector2(rand, self.state.ground.y - 100)
             self.state.score += 1
+
+        if not self.unit.is_alive:
+            self.state.enemies.remove(self.unit)
+
         # враг ударил игрока
         if self.unit.rect_collision.colliderect(self.player_unit.rect_collision):
             self.unit.hit()

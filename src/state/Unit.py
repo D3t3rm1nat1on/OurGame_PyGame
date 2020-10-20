@@ -25,7 +25,10 @@ class Unit:
         :type full_size Vector2
         :type affected_by_gravity bool
         """
-        self.is_killable = True
+        self.is_alive = True
+
+        self.is_killable = False
+        self.is_collision_able = True
         self.position = position
         self.speed = speed
         self.delta_speed = Vector2(0, 0)
