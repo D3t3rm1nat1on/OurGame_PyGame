@@ -10,7 +10,8 @@ class Menu:
         self.clock = pygame.time.Clock()
         self.running = True
         self.theme = 0
-        self.ind = 0
+        self.old_x, self.old_y = 0, 0
+        self.ind = -1
         self.color = [
             [(255, 20, 147), (176, 255, 46)],
             [(176, 255, 46), (255, 20, 147)]]
@@ -90,15 +91,19 @@ class Menu:
     def catch_action(self):
         x, y = pygame.mouse.get_pos()
         for event in pygame.event.get():
-            if self.num_ren == 0:
-                self.chosen_button(x, y, self.text)
-            if self.num_ren == 1:
-                self.chosen_button(x, y, self.text_settings)
-            if self.num_ren == 5:
-                self.chosen_button(x, y, self.text_theme)
 
             if event.type == pygame.KEYDOWN:
+                self.old_x, self.old_y = x, y
                 self.move_pointer(event)
+            elif self.old_y != y or self.old_x != x:
+                self.ind = -1
+                if self.num_ren == 0:
+                    self.chosen_button(x, y, self.text)
+                if self.num_ren == 1:
+                    self.chosen_button(x, y, self.text_settings)
+                if self.num_ren == 5:
+                    self.chosen_button(x, y, self.text_theme)
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.num_ren == 0 and 150 <= x <= 650 and 90 <= y <= 130:
                     self.running = False
