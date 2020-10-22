@@ -15,10 +15,10 @@ class Menu:
             [(176, 255, 46), (255, 20, 147)]]
         self.settings = Settings()
         self.text_theme = [
-            [self.color[self.theme][0], (0, 0, 190, 40), 'Back', (0, 0), False, 1, False],
             [self.color[self.theme][0], (150, 90, 500, 40), "Shine like a princess", (300, 90), False, -1, True, 0],
             # тема, координаты прямоуг., название, коор. текста, выделение кнопки, переход в другой рендер, доступна ли, номер темы
-            [self.color[self.theme][0], (150, 150, 500, 40), "Toxic frogs", (300, 150), False, -1, True, 1]
+            [self.color[self.theme][0], (150, 150, 500, 40), "Toxic frogs", (300, 150), False, -1, True, 1],
+            [self.color[self.theme][0], (150, 210, 500, 40), 'Back', (300, 210), False, 1, False]
         ]
         self.text = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Let's go!", (300, 90), False, 140800],
@@ -30,9 +30,9 @@ class Menu:
         self.text_settings = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Sound:" + str(self.settings.vol) + "%", (300, 90), False,
              -1],
-            [self.color[self.theme][0], (150, 210, 500, 40), "Change connection", (300, 210), False, -1],
             [self.color[self.theme][0], (150, 150, 500, 40), "Unlocked themes", (300, 150), False, 5],
-            [self.color[self.theme][0], (0, 0, 190, 40), 'To main menu', (0, 0), False, 0],
+            [self.color[self.theme][0], (150, 210, 500, 40), "Change connection", (300, 210), False, -1],
+            [self.color[self.theme][0], (150, 270, 500, 40), 'To main menu', (300, 270), False, 0],
             [self.color[self.theme][0], (110, 90, 30, 40), '-', (120, 85), False, -1],
             [self.color[self.theme][0], (660, 90, 30, 40), '+', (670, 85), False, -1]]
 
