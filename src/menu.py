@@ -10,6 +10,7 @@ class Menu:
         self.clock = pygame.time.Clock()
         self.running = True
         self.theme = 0
+        self.ind = 0
         self.color = [
             [(255, 20, 147), (176, 255, 46)],
             [(176, 255, 46), (255, 20, 147)]]
@@ -37,6 +38,7 @@ class Menu:
             [self.color[self.theme][0], (660, 90, 30, 40), '+', (670, 85), False, -1]]
 
         self.num_ren = 0
+        self.lists = [self.text, self.text_settings, 2, 3, 4, self.text_theme]
         self.renders = [self.render0, self.render1, 2, 3, 4, self.render5]
 
     def button(self, color_rect, coordinates, text, start_text):
@@ -94,6 +96,9 @@ class Menu:
                 self.chosen_button(x, y, self.text_settings)
             if self.num_ren == 5:
                 self.chosen_button(x, y, self.text_theme)
+
+            if event.type == pygame.KEYDOWN:
+                self.move_pointer(event)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.num_ren == 0 and 150 <= x <= 650 and 90 <= y <= 130:
                     self.running = False
@@ -124,6 +129,21 @@ class Menu:
                 if el[6]:
                     self.theme = el[7]
                     self.render5()
+
+    def move_pointer(self, ev):
+        cur_list = self.lists[self.num_ren]
+        if self.num_ren != 1:
+            if self.ind > 0:
+                if ev.key == pygame.K_UP:
+                    self.ind -= 1
+                    cur_list[self.ind + 1][4] = False
+                    cur_list[self.ind][4] = True
+            if self.ind < len(cur_list) - 1:
+                if ev.key == pygame.K_DOWN:
+                    self.ind += 1
+                    if self.ind != 0:
+                        cur_list[self.ind - 1][4] = False
+                    cur_list[self.ind][4] = True
 
     def chosen_button(self, x, y, temp):
         for el in temp:
