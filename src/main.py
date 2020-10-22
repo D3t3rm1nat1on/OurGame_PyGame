@@ -1,11 +1,10 @@
 import os
 
 import pygame
-import math
 from pygame.math import Vector2
 
 import src.state as states
-from src.command import JumpCommand, MoveCommand, MovePlayerCommand, MoveEnemyCommand, CrouchCommand, SprintCommand
+from src.command import JumpCommand, MovePlayerCommand, MoveEnemyCommand, CrouchCommand, SprintCommand
 from src.state import GameState
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -17,7 +16,7 @@ class GameWindow:
         self.window_proportion = 1
         self.state = GameState()
         self.state.ground = pygame.Rect(self.state.ground, self.state.world_size)
-        self.player = states.Player(full_size=Vector2(40, 80), max_speed_x=10, affected_by_gravity=True)
+        self.player = states.Player(full_size=Vector2(40, 80), affected_by_gravity=True)
         self.window = pygame.display.set_mode((int(self.state.world_size.x) * self.window_proportion,
                                                int(self.state.world_size.y) * self.window_proportion))
         pygame.display.set_caption("Наша игра")
@@ -37,9 +36,9 @@ class GameWindow:
 
         bomb = states.UnitBirdBomb(position=Vector2(self.state.world_size.x, self.state.ground.y - 100),
                                    speed=Vector2(-5, 0),
-                                   full_size=Vector2(100, 100), affected_by_gravity=False)
+                                   full_size=Vector2(35, 35), affected_by_gravity=False)
         self.state.enemies.append(bomb)
-
+        self.state.enemies.clear()
         self.commands = []
 
     def process_input(self):
@@ -66,11 +65,10 @@ class GameWindow:
                         self.player.is_crouching = False
                         self.player.rect_collision.size = self.player.full_size
                         self.player.position.y -= self.player.full_size.y - self.player.crouch_size.y
-                        self.player.speed.x += 1
+                        self.player.speed.x = 0
                 if event.key == pygame.K_RIGHT:
                     if self.player.is_sprinting:
                         self.player.is_sprinting = False
-                        self.player.speed.x -= 2
 
         command = MovePlayerCommand(self.state, self.player)
         self.commands.append(command)
@@ -110,6 +108,9 @@ class GameWindow:
 
         text = "Score: " + str(self.state.score)
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)), (0, 0))
+        self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(str(self.player.speed.x), True, (0, 0, 0)), (100, 0))
+
+        pygame.draw.rect(self.window, (0, 200, 50), (0, 50, self.player.stamina * 2, 40))
 
         pygame.display.update()
 
