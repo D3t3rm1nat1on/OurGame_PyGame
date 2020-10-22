@@ -95,6 +95,9 @@ class Menu:
             if event.type == pygame.KEYDOWN:
                 self.old_x, self.old_y = x, y
                 self.move_pointer(event)
+                if event.key == pygame.K_RETURN:
+                    if self.ind != -1 and self.lists[self.num_ren][self.ind][5] != -1:
+                        self.num_ren = self.lists[self.num_ren][self.ind][5]
             elif self.old_y != y or self.old_x != x:
                 self.ind = -1
                 if self.num_ren == 0:
