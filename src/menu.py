@@ -151,6 +151,8 @@ class Menu:
                 cur_list[self.ind + 1][4] = False
                 cur_list[self.ind][4] = True
         if self.ind < len(cur_list) - 1:
+            if self.num_ren == 1 and self.ind == 3:
+                return
             if ev.key == pygame.K_DOWN:
                 self.ind += 1
                 if self.ind != 0:
