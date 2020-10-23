@@ -99,7 +99,11 @@ class Menu:
                     if self.ind != -1 and self.lists[self.num_ren][self.ind][5] != -1:
                         self.lists[self.num_ren][self.ind][4] = False
                         self.num_ren = self.lists[self.num_ren][self.ind][5]
-                    self.ind = -1
+                        self.ind = -1
+                    if self.num_ren == 1 and self.ind == 4:
+                        self.settings.lower_sound()
+                    if self.num_ren == 1 and self.ind == 5:
+                        self.settings.louder_sound()
             elif self.old_y != y or self.old_x != x:
                 self.ind = -1
                 if self.num_ren == 0:
