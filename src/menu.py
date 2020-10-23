@@ -97,7 +97,9 @@ class Menu:
                 self.move_pointer(event)
                 if event.key == pygame.K_RETURN:
                     if self.ind != -1 and self.lists[self.num_ren][self.ind][5] != -1:
+                        self.lists[self.num_ren][self.ind][4] = False
                         self.num_ren = self.lists[self.num_ren][self.ind][5]
+                    self.ind = -1
             elif self.old_y != y or self.old_x != x:
                 self.ind = -1
                 if self.num_ren == 0:
@@ -140,18 +142,45 @@ class Menu:
 
     def move_pointer(self, ev):
         cur_list = self.lists[self.num_ren]
-        if self.num_ren != 1:
-            if self.ind > 0:
-                if ev.key == pygame.K_UP:
-                    self.ind -= 1
-                    cur_list[self.ind + 1][4] = False
-                    cur_list[self.ind][4] = True
-            if self.ind < len(cur_list) - 1:
-                if ev.key == pygame.K_DOWN:
-                    self.ind += 1
-                    if self.ind != 0:
-                        cur_list[self.ind - 1][4] = False
-                    cur_list[self.ind][4] = True
+        if self.num_ren == 1 and (ev.key == pygame.K_RIGHT or ev.key == pygame.K_LEFT):
+            self.button_soung(ev)
+            return
+        if self.ind > 0:
+            if ev.key == pygame.K_UP:
+                self.ind -= 1
+                cur_list[self.ind + 1][4] = False
+                cur_list[self.ind][4] = True
+        if self.ind < len(cur_list) - 1:
+            if ev.key == pygame.K_DOWN:
+                self.ind += 1
+                if self.ind != 0:
+                    cur_list[self.ind - 1][4] = False
+                cur_list[self.ind][4] = True
+
+    def button_soung(self, ev):
+        if self.text_settings[0][4]:
+            if ev.key == pygame.K_RIGHT:
+                self.text_settings[5][4] = True
+                self.text_settings[0][4] = False
+                self.ind = 5
+                return
+            if ev.key == pygame.K_LEFT:
+                self.text_settings[4][4] = True
+                self.text_settings[0][4] = False
+                self.ind = 4
+                return
+        if self.text_settings[5][4]:
+            if ev.key == pygame.K_LEFT:
+                self.text_settings[0][4] = True
+                self.text_settings[5][4] = False
+                self.ind = 0
+                return
+        if self.text_settings[4][4]:
+            if ev.key == pygame.K_RIGHT:
+                self.text_settings[0][4] = True
+                self.text_settings[4][4] = False
+                self.ind = 0
+                return
 
     def chosen_button(self, x, y, temp):
         for el in temp:
