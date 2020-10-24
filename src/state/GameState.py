@@ -21,7 +21,7 @@ class GameState:
         self.ground = Vector2(0, 675)
         self.gravity = Vector2(0, 0.5)
         self.border_left = 0
-        self.border_right = 300
+        self.border_right = 900
 
         self.player = Unit(full_size=Vector2(40, 80))
         self.enemies = []

@@ -1,4 +1,9 @@
 class Command:
+    complete: bool
+
+    def __init__(self):
+        pass
+    
     def run(self):
         raise NotImplementedError()
 

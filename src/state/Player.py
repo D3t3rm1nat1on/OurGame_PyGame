@@ -20,16 +20,6 @@ class Player(Unit):
         self.stamina -= 0.5
 
     def unique_movement(self):
-        if self.is_sprinting and self.stamina >= 0.5:
-            self.sprint()
-        else:
-            self.stamina += 0.3
-            if self.stamina > 100.0:
-                self.stamina = 100.0
-            if self.speed.x > 0:
-                if self.speed.x > 0.16:
-                    self.speed.x -= 0.16
-                else:
-                    self.speed.x = 0
+        # предел скорости
         if self.speed.x > self.max_speed_x:
             self.speed.x = self.max_speed_x

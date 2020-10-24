@@ -3,6 +3,7 @@ from .Command import Command
 
 class CrouchCommand(Command):
     def __init__(self, state, unit):
+        super().__init__()
         self.state = state
         self.unit = unit
 

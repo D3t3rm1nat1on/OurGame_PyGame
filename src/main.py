@@ -1,16 +1,19 @@
 import os
+from typing import List, Any
 
 import pygame
 from pygame.math import Vector2
 
 import src.state as states
-from src.command import JumpCommand, MovePlayerCommand, MoveEnemyCommand, CrouchCommand, SprintCommand
+from src.command import *
 from src.state import GameState
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 
 class GameWindow:
+    commands: List[Command]
+
     def __init__(self):
         pygame.init()
         self.window_proportion = 1
@@ -57,8 +60,7 @@ class GameWindow:
                     command = CrouchCommand(self.state, self.player)
                     self.commands.append(command)
                 elif event.key == pygame.K_RIGHT:
-                    command = SprintCommand(self.state, self.player)
-                    self.commands.append(command)
+                    self.player.is_sprinting = True
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
                     if self.player.is_crouching:
@@ -69,6 +71,10 @@ class GameWindow:
                 if event.key == pygame.K_RIGHT:
                     if self.player.is_sprinting:
                         self.player.is_sprinting = False
+
+        if self.player.is_sprinting:
+            command = SprintCommand(self.state, self.player)
+            self.commands.append(command)
 
         command = MovePlayerCommand(self.state, self.player)
         self.commands.append(command)
@@ -108,7 +114,7 @@ class GameWindow:
 
         text = "Score: " + str(self.state.score)
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)), (0, 0))
-        self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(str(self.player.speed.x), True, (0, 0, 0)), (100, 0))
+        self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(str(self.player.speed.x), True, (0, 0, 0)), (150, 0))
 
         pygame.draw.rect(self.window, (0, 200, 50), (0, 50, self.player.stamina * 2, 40))
 
