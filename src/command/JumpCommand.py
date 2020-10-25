@@ -1,9 +1,12 @@
 from pygame.math import Vector2
+from src.state import Unit
 
 from .Command import Command
 
 
 class JumpCommand(Command):
+    unit: Unit
+
     def __init__(self, state, unit):
         super().__init__()
         self.state = state

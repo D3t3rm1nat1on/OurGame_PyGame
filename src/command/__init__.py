@@ -5,3 +5,4 @@ from .MoveEnemyCommand import MoveEnemyCommand
 from .SprintCommand import SprintCommand
 from .CrouchCommand import CrouchCommand
 from .MovePlayerCommand import MovePlayerCommand
+from .SlowCommand import SlowCommand

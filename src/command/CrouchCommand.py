@@ -1,15 +1,25 @@
 from .Command import Command
+from src.state import Unit
 
 
 class CrouchCommand(Command):
+    unit: Unit
+
     def __init__(self, state, unit):
         super().__init__()
         self.state = state
         self.unit = unit
 
     def run(self):
-        if not self.unit.is_crouching and self.on_ground(self.state, self.unit):
-            self.unit.rect_collision.size = self.unit.crouch_size
-            self.unit.position.y += self.unit.full_size.y - self.unit.crouch_size.y
-            self.unit.speed.x = -1
-            self.unit.is_crouching = True
+        if self.on_ground(self.state, self.unit):
+            if self.unit.speed.x <= 0:
+                self.unit.rect_collision.size = self.unit.crouch_size
+            else:
+                self.unit.rect_collision.size = self.unit.slide_size
+                self.unit.position.y += self.unit.crouch_size.y - self.unit.slide_size.y
+
+        if self.on_ground(self.state, self.unit):
+            if self.unit.speed.x > 0:
+                self.unit.speed.x -= .01
+            else:
+                self.unit.speed.x -= .02

@@ -5,6 +5,7 @@ from pygame.rect import RectType
 
 
 class Unit:
+    slide_size: Vector2
     position: Vector2
     speed: Vector2
     delta_speed: Vector2
@@ -35,6 +36,7 @@ class Unit:
         self.full_size = full_size
         self.rect_collision = pygame.Rect(position, full_size)
         self.crouch_size = Vector2(full_size.x, full_size.y / 2)
+        self.slide_size = Vector2(full_size.x * 1.4, full_size.y / 3)
         self.is_crouching = False
         self.is_sprinting = False
         self.is_slowing = False

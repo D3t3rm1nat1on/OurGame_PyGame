@@ -19,7 +19,7 @@ class GameWindow:
         self.window_proportion = 1
         self.state = GameState()
         self.state.ground = pygame.Rect(self.state.ground, self.state.world_size)
-        self.player = states.Player(full_size=Vector2(40, 80), affected_by_gravity=True)
+        self.player = states.Player(full_size=Vector2(40, 80), affected_by_gravity=True, position=Vector2(200, 200))
         self.window = pygame.display.set_mode((int(self.state.world_size.x) * self.window_proportion,
                                                int(self.state.world_size.y) * self.window_proportion))
         pygame.display.set_caption("Наша игра")
@@ -41,7 +41,7 @@ class GameWindow:
                                    speed=Vector2(-5, 0),
                                    full_size=Vector2(35, 35), affected_by_gravity=False)
         self.state.enemies.append(bomb)
-        self.state.enemies.clear()
+        #self.state.enemies.clear()
         self.commands = []
 
     def process_input(self):
@@ -57,10 +57,13 @@ class GameWindow:
                     command = JumpCommand(self.state, self.player)
                     self.commands.append(command)
                 elif event.key == pygame.K_DOWN:
-                    command = CrouchCommand(self.state, self.player)
-                    self.commands.append(command)
+                    self.player.is_crouching = True
+                    self.player.rect_collision.size = self.player.crouch_size
+                    self.player.position.y += self.player.full_size.y - self.player.crouch_size.y
                 elif event.key == pygame.K_RIGHT:
                     self.player.is_sprinting = True
+                elif event.key == pygame.K_LEFT:
+                    self.player.is_slowing = True
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
                     if self.player.is_crouching:
@@ -71,9 +74,17 @@ class GameWindow:
                 if event.key == pygame.K_RIGHT:
                     if self.player.is_sprinting:
                         self.player.is_sprinting = False
+                if event.key == pygame.K_LEFT:
+                    self.player.is_slowing = False
 
         if self.player.is_sprinting:
             command = SprintCommand(self.state, self.player)
+            self.commands.append(command)
+        if self.player.is_crouching:
+            command = CrouchCommand(self.state, self.player)
+            self.commands.append(command)
+        if self.player.is_slowing:
+            command = SlowCommand(self.state, self.player)
             self.commands.append(command)
 
         command = MovePlayerCommand(self.state, self.player)
@@ -114,7 +125,8 @@ class GameWindow:
 
         text = "Score: " + str(self.state.score)
         self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)), (0, 0))
-        self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(str(self.player.speed.x), True, (0, 0, 0)), (150, 0))
+        self.window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(str(self.player.speed.x), True, (0, 0, 0)),
+                         (150, 0))
 
         pygame.draw.rect(self.window, (0, 200, 50), (0, 50, self.player.stamina * 2, 40))
 

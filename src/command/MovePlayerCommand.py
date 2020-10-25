@@ -14,11 +14,17 @@ class MovePlayerCommand(MoveCommand):
         if player.rect_collision.right >= self.state.border_right:
             player.position.x = self.state.border_right - self.unit.rect_collision.size[0]
 
-        # замедляется без спринта
-        if not player.is_sprinting and player.speed.x > 0 and self.on_ground(self.state, player):
-            if player.speed.x > 0.16:
-                player.speed.x -= 0.16
+        # замедляется без спринта (или в подкате/присяди)
+        if (not player.is_sprinting or player.is_crouching) and self.on_ground(self.state, player):
+            if player.speed.x > .09:
+                player.speed.x -= .09
+            elif player.speed.x < -.09:
+                player.speed.x += .09
             else:
                 player.speed.x = 0
 
-
+        # регенерация стамины
+        if not player.is_sprinting or not self.on_ground(self.state, player):
+            player.stamina += 0.3
+        if player.stamina > 100.0:
+            player.stamina = 100.0
