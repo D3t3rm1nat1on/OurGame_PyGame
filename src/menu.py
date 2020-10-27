@@ -40,7 +40,7 @@ class Menu:
 
         self.num_ren = 0
         self.lists = [self.text, self.text_settings, 2, 3, 4, self.text_theme]
-        self.renders = [self.render0, self.render1, 2, 3, 4, self.render5]
+        self.renders = [self.render0, self.render1, self.render2, 3, 4, self.render5]
 
     def button(self, color_rect, coordinates, text, start_text):
         color_rect = self.color[self.theme][0]
@@ -71,6 +71,21 @@ class Menu:
         for el in self.text_settings:
             if el[4]:
                 self.draw_frame(el[1][0], el[1][1], el[1][2], el[1][3])
+        pygame.display.update()
+
+    def render2(self):
+        self.clock.tick(60)
+        self.window.blit(pygame.image.load("background.jpg"), (0, 0))
+        self.window.blit(
+            pygame.font.SysFont('Comic Sans MS', 30).render('Results', True, (0, 0, 0)),
+            (300, 20))
+        with open('results.txt', 'r') as f:
+            nums = f.read().splitlines()
+        results = []
+        for el in (nums):
+            temp = str(el).split()
+            results.append(temp[1])
+            results.append(temp[2])
         pygame.display.update()
 
     def render5(self):
