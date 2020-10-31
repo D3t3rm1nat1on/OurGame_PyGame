@@ -70,7 +70,6 @@ class GameWindow:
                         self.player.is_crouching = False
                         self.player.rect_collision.size = self.player.full_size
                         self.player.position.y -= self.player.full_size.y - self.player.crouch_size.y
-                        self.player.speed.x = 0
                 if event.key == pygame.K_RIGHT:
                     if self.player.is_sprinting:
                         self.player.is_sprinting = False

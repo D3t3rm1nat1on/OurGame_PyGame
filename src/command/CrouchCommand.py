@@ -20,6 +20,7 @@ class CrouchCommand(Command):
 
         if self.on_ground(self.state, self.unit):
             if self.unit.speed.x > 0:
-                self.unit.speed.x -= .015
-            else:
                 self.unit.speed.x -= .04
+            else:
+                self.unit.speed.x -= .015
+
