@@ -41,7 +41,7 @@ class GameWindow:
                                    speed=Vector2(-5, 0),
                                    full_size=Vector2(35, 35), affected_by_gravity=False)
         self.state.enemies.append(bomb)
-        #self.state.enemies.clear()
+        self.state.enemies.clear()
         self.commands = []
 
     def process_input(self):
