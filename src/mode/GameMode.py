@@ -5,5 +5,5 @@ class GameMode:
     def update(self):
         raise NotImplementedError()
 
-    def render(self):
+    def render(self, window):
         raise NotImplementedError()
