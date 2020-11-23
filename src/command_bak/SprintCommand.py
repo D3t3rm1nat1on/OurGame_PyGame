@@ -1,5 +1,5 @@
 from .Command import Command
-from src.state import Player
+from src.state_bak import Player
 
 
 class SprintCommand(Command):
