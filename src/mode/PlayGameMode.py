@@ -8,6 +8,8 @@ from .GameMode import GameMode
 
 class PlayGameMode(GameMode):
     def __init__(self):
+        super().__init__()
+
         self.cell_size = Vector2(16, 16)
         self.game_window = pygame.Surface((240, 160))
 
