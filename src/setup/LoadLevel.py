@@ -12,7 +12,7 @@ class LoadLevel:
         """
 
         :type file_name: String
-        :type game_mode: GameMode
+        :type game_mode: PlayGameMode
         """
         self.file_name = file_name
         self.game_mode = game_mode
@@ -25,7 +25,7 @@ class LoadLevel:
         tile_map = tmx.TileMap.load(self.file_name)
         if tile_map.orientation != "orthogonal":
             raise RuntimeError("Error in {}: invalid orientation".format(self.file_name))
-        if len(tile_map.layers) != 2:
+        if len(tile_map.layers) != self.game_mode.layers_count:
             raise RuntimeError("Error in {}: 2 layers are expected".format(self.file_name))
 
         state.world_size = Vector2(tile_map.width, tile_map.height)
@@ -36,12 +36,13 @@ class LoadLevel:
         cell_size = Vector2(tileset.tilewidth, tileset.tileheight)
         state.ground[:] = array
         image_file = tileset.image.source
-        self.game_mode.layers.append(ArrayLayer(cell_size, image_file, state, state.ground))
+        self.game_mode.layers[0] = ArrayLayer(cell_size, image_file, state, state.ground)
 
     def decode_array_layer(self, tile_map, layer):
         """
 
         :type tile_map: tmx.TileMap
+        :type layer:    tmx.Layer
         """
         tileset = self.decode_layer(tile_map, layer)
 
@@ -85,7 +86,7 @@ class LoadLevel:
         else:
             tileset = None
             for t in tile_map.tilesets:
-                if gid >= t.firstgid and gid < t.firstgid + t.tilecount:
+                if t.firstgid <= gid < t.firstgid + t.tilecount:
                     tileset = t
                     break
             if tileset is None:
