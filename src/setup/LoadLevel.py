@@ -29,7 +29,7 @@ class LoadLevel:
 
         state.world_size = Vector2(tile_map.width, tile_map.height)
         image = self.decode_background(tile_map.layers[0]).source
-        self.game_mode.layers[0] = ImageLayer(None, image)
+        self.game_mode.layers[0] = ImageLayer(image)
 
         tileset, array = self.decode_array_layer(tile_map, tile_map.layers[1])
         cell_size = Vector2(tileset.tilewidth, tileset.tileheight)
