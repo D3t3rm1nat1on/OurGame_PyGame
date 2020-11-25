@@ -16,7 +16,7 @@ class PlayGameMode(GameMode):
         self.layers_count = 2
 
         self.state = GameState()
-        self.layers = [None] * (self.layers_count - 1)
+        self.layers = [None] * self.layers_count
         self.background = None
 
     def process_input(self):
@@ -34,11 +34,6 @@ class PlayGameMode(GameMode):
 
     def render(self, window):
         self.game_window.fill((0, 0, 0))
-
-        # TODO: encapsulate to layer class
-        if self.background is not None:
-            image = pygame.image.load(self.background)
-            self.game_window.blit(image, (0, 0))
 
         for layer in self.layers:
             layer.render(self.game_window)

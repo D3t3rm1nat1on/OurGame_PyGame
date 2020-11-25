@@ -3,8 +3,7 @@ import os
 import tmx
 from pygame import Vector2
 
-from layer import ArrayLayer
-from mode.GameMode import GameMode
+from layer import ArrayLayer, ImageLayer
 
 
 class LoadLevel:
@@ -29,14 +28,14 @@ class LoadLevel:
             raise RuntimeError("Error in {}: 2 layers are expected".format(self.file_name))
 
         state.world_size = Vector2(tile_map.width, tile_map.height)
-        image = self.decode_background(tile_map.layers[0])
-        self.game_mode.background = image.source
+        image = self.decode_background(tile_map.layers[0]).source
+        self.game_mode.layers[0] = ImageLayer(None, image)
 
         tileset, array = self.decode_array_layer(tile_map, tile_map.layers[1])
         cell_size = Vector2(tileset.tilewidth, tileset.tileheight)
         state.ground[:] = array
         image_file = tileset.image.source
-        self.game_mode.layers[0] = ArrayLayer(cell_size, image_file, state, state.ground)
+        self.game_mode.layers[1] = ArrayLayer(cell_size, image_file, state, state.ground)
 
     def decode_array_layer(self, tile_map, layer):
         """
