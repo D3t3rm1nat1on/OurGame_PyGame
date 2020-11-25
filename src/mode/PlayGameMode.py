@@ -16,11 +16,18 @@ class PlayGameMode(GameMode):
         self.layers_count = 2
 
         self.state = GameState()
-        self.layers = [None] * self.layers_count
+        self.layers = [None] * (self.layers_count - 1)
         self.background = None
 
     def process_input(self):
-        pass
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.notify_quit_requested()
+                break
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.notify_quit_requested()
+                    break
 
     def update(self):
         pass
