@@ -78,14 +78,24 @@ class Menu:
         self.window.blit(pygame.image.load("background.jpg"), (0, 0))
         self.window.blit(
             pygame.font.SysFont('Comic Sans MS', 30).render('Results', True, (0, 0, 0)),
-            (300, 20))
+            (200, 20))
         with open('results.txt', 'r') as f:
             nums = f.read().splitlines()
-        results = []
-        for el in (nums):
+       # results = []
+        self.window.blit(
+            pygame.font.SysFont('Comic Sans MS', 30).render('Your best score: ', True, (0, 0, 0)),
+            (50, 60))
+        for i, el in enumerate(nums):
             temp = str(el).split()
-            results.append(temp[1])
-            results.append(temp[2])
+           # results.append(temp[1])
+         #   results.append(temp[2])
+            self.window.blit(
+                pygame.font.SysFont('Comic Sans MS', 30).render(temp[1], True, (0, 0, 0)),
+                (300 , 60 + 30 * i))
+            self.window.blit(
+                pygame.font.SysFont('Comic Sans MS', 30).render(temp[2], True, (0, 0, 0)),
+                (300 + 60 + i, 60 + 30 * i))
+
         pygame.display.update()
 
     def render5(self):
