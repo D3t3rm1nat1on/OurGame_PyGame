@@ -15,6 +15,7 @@ class LoadLevel:
         """
         self.file_name = file_name
         self.game_mode = game_mode
+        self.map_layers = 2
 
     def run(self):
         state = self.game_mode.state
@@ -24,7 +25,7 @@ class LoadLevel:
         tile_map = tmx.TileMap.load(self.file_name)
         if tile_map.orientation != "orthogonal":
             raise RuntimeError("Error in {}: invalid orientation".format(self.file_name))
-        if len(tile_map.layers) != self.game_mode.layers_count:
+        if len(tile_map.layers) != self.map_layers:
             raise RuntimeError("Error in {}: 2 layers are expected".format(self.file_name))
 
         state.world_size = Vector2(tile_map.width, tile_map.height)

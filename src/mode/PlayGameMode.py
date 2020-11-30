@@ -2,6 +2,7 @@ import pygame
 from pygame.math import Vector2
 
 from state import GameState
+from layer import UnitLayer
 
 from .GameMode import GameMode
 
@@ -13,10 +14,9 @@ class PlayGameMode(GameMode):
         self.cell_size = Vector2(16, 16)
         self.game_window = pygame.Surface((240, 160))
 
-        self.layers_count = 2
-
         self.state = GameState()
-        self.layers = [None] * self.layers_count
+        self.layers = [None] * 3
+        self.layers[2] = (UnitLayer(self.cell_size, "assets/herochar_run_anim_strip_6.png", self.state))
         self.background = None
 
     def process_input(self):
