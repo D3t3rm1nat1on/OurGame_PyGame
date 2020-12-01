@@ -77,7 +77,7 @@ class Menu:
         self.window.blit(
             pygame.font.SysFont('Comic Sans MS', 30).render('Results', True, (0, 0, 0)),
             (200, 20))
-        with open('results.txt', 'r') as f:
+        with open('../results.txt', 'r') as f:
             nums = f.read().splitlines()
        # results = []
         self.window.blit(
