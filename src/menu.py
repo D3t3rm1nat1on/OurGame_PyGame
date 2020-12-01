@@ -94,7 +94,7 @@ class Menu:
                 (300 , 60 + 30 * i))
             self.window.blit(
                 pygame.font.SysFont('Comic Sans MS', 30).render(temp[2], True, (0, 0, 0)),
-                (300 + 60 + i, 60 + 30 * i))
+                (300 + 60, 60 + 30 * i))
 
         pygame.display.update()
 
