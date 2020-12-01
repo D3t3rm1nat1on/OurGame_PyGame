@@ -26,8 +26,7 @@ class Menu:
             [self.color[self.theme][0], (150, 90, 500, 40), "Let's go!", (300, 90), False, 140800],
             [self.color[self.theme][0], (150, 150, 500, 40), "Settings", (300, 150), False, 1],
             [self.color[self.theme][0], (150, 210, 500, 40), "Results", (300, 210), False, 2],
-            [self.color[self.theme][0], (150, 270, 500, 40), "Achievements", (300, 270), False, 3],
-            [self.color[self.theme][0], (150, 330, 500, 40), "Check the connection", (300, 330), False, 4]]
+            [self.color[self.theme][0], (150, 270, 500, 40), "Achievements", (300, 270), False, 3]]
 
         self.text_settings = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Sound:" + str(self.settings.vol) + "%", (300, 90), False,
@@ -124,9 +123,9 @@ class Menu:
                         self.lists[self.num_ren][self.ind][4] = False
                         self.num_ren = self.lists[self.num_ren][self.ind][5]
                         self.ind = -1
-                    if self.num_ren == 1 and self.ind == 4:
+                    if self.num_ren == 1 and self.ind == 3:
                         self.settings.lower_sound()
-                    if self.num_ren == 1 and self.ind == 5:
+                    if self.num_ren == 1 and self.ind == 4:
                         self.settings.louder_sound()
             elif self.old_y != y or self.old_x != x:
                 self.ind = -1
@@ -192,12 +191,12 @@ class Menu:
             if ev.key == pygame.K_RIGHT:
                 self.text_settings[4][4] = True
                 self.text_settings[0][4] = False
-                self.ind = 5
+                self.ind = 4
                 return
             if ev.key == pygame.K_LEFT:
                 self.text_settings[3][4] = True
                 self.text_settings[0][4] = False
-                self.ind = 4
+                self.ind = 3
                 return
         if self.text_settings[4][4]:
             if ev.key == pygame.K_LEFT:
