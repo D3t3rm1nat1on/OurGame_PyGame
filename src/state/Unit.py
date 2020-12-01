@@ -1,8 +1,10 @@
+import enum
+
 from pygame.math import Vector2
 
 
 class Unit:
-    def __init__(self, position, speed, tile):
+    def __init__(self, position, speed):
         """
 
         :type position: Vector2
@@ -10,6 +12,11 @@ class Unit:
         """
         self.position = position
         self.speed = speed
-        self.tile = tile
-        self.frame_index = 0.0
-        self.max_frame_index = 5
+        self.frame_index = 0
+        self.state = State.running
+
+
+class State(enum.Enum):
+    running = 0
+    jumping_up = 1
+    jumping_down = 2

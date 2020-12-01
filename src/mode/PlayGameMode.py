@@ -16,7 +16,7 @@ class PlayGameMode(GameMode):
 
         self.state = GameState()
         self.layers = [None] * 3
-        self.layers[2] = (UnitLayer(self.cell_size, "assets/herochar_run_anim_strip_6.png", self.state))
+        self.layers[2] = (UnitLayer(self.cell_size, "assets/herochar_spritesheet.png", self.state))
         self.background = None
 
     def process_input(self):

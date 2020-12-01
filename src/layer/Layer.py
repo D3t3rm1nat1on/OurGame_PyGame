@@ -9,7 +9,7 @@ class Layer:
         """
 
         :type cell_size: Vector2
-        :type texture:   Surface
+        :type texture:   str
         """
         self.cell_size = cell_size
         self.texture = pygame.image.load(texture)
