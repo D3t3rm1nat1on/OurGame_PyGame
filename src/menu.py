@@ -33,7 +33,6 @@ class Menu:
             [self.color[self.theme][0], (150, 90, 500, 40), "Sound:" + str(self.settings.vol) + "%", (300, 90), False,
              -1],
             [self.color[self.theme][0], (150, 150, 500, 40), "Unlocked themes", (300, 150), False, 5],
-            [self.color[self.theme][0], (150, 210, 500, 40), "Change connection", (300, 210), False, -1],
             [self.color[self.theme][0], (150, 270, 500, 40), 'To main menu', (300, 270), False, 0],
             [self.color[self.theme][0], (110, 90, 30, 40), '-', (120, 85), False, -1],
             [self.color[self.theme][0], (660, 90, 30, 40), '+', (670, 85), False, -1]]
@@ -180,7 +179,7 @@ class Menu:
                 cur_list[self.ind + 1][4] = False
                 cur_list[self.ind][4] = True
         if self.ind < len(cur_list) - 1:
-            if self.num_ren == 1 and self.ind == 3:
+            if self.num_ren == 1 and self.ind == 2:
                 return
             if ev.key == pygame.K_DOWN:
                 self.ind += 1
@@ -191,25 +190,25 @@ class Menu:
     def button_soung(self, ev):
         if self.text_settings[0][4]:
             if ev.key == pygame.K_RIGHT:
-                self.text_settings[5][4] = True
+                self.text_settings[4][4] = True
                 self.text_settings[0][4] = False
                 self.ind = 5
                 return
             if ev.key == pygame.K_LEFT:
-                self.text_settings[4][4] = True
+                self.text_settings[3][4] = True
                 self.text_settings[0][4] = False
                 self.ind = 4
                 return
-        if self.text_settings[5][4]:
+        if self.text_settings[4][4]:
             if ev.key == pygame.K_LEFT:
                 self.text_settings[0][4] = True
-                self.text_settings[5][4] = False
+                self.text_settings[4][4] = False
                 self.ind = 0
                 return
-        if self.text_settings[4][4]:
+        if self.text_settings[3][4]:
             if ev.key == pygame.K_RIGHT:
                 self.text_settings[0][4] = True
-                self.text_settings[4][4] = False
+                self.text_settings[3][4] = False
                 self.ind = 0
                 return
 
