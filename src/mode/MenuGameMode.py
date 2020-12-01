@@ -32,9 +32,11 @@ class MenuGameMode(GameMode):
             [self.color[self.theme][0], (150, 270, 500, 40), 'To main menu', (300, 270), False, 0],
             [self.color[self.theme][0], (110, 90, 30, 40), '-', (120, 85), False, -1],
             [self.color[self.theme][0], (660, 90, 30, 40), '+', (670, 85), False, -1]]
-
+        self.results = [
+            [self.color[self.theme][0], (150, 400, 500, 40), 'To main menu', (300, 400), False, 0]
+        ]
         self.num_ren = 0
-        self.lists = [self.text, self.text_settings, 2, 3, 4, self.text_theme]
+        self.lists = [self.text, self.text_settings, self.results, 3,4,  self.text_theme]
         self.renders = [self.render0, self.render1, self.render2, 3, 4, self.render5]
 
     def process_input(self):
@@ -55,12 +57,7 @@ class MenuGameMode(GameMode):
                         self.settings.louder_sound()
             elif self.old_y != y or self.old_x != x:
                 self.ind = -1
-                if self.num_ren == 0:
-                    self.chosen_button(x, y, self.text)
-                if self.num_ren == 1:
-                    self.chosen_button(x, y, self.text_settings)
-                if self.num_ren == 5:
-                    self.chosen_button(x, y, self.text_theme)
+                self.chosen_button(x, y, self.lists[self.num_ren])
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.num_ren == 0 and 150 <= x <= 650 and 90 <= y <= 130:
@@ -73,9 +70,12 @@ class MenuGameMode(GameMode):
                     if self.num_ren == 1:
                         self.into_new_render(x, y, self.text_settings)
                     else:
-                        if self.num_ren == 5:
-                            self.into_new_render(x, y, self.text_theme)
-                            self.change_theme(x, y)
+                        if self.num_ren == 2:
+                            self.into_new_render(x, y, self.results)
+                        else:
+                            if self.num_ren == 5:
+                                self.into_new_render(x, y, self.text_theme)
+                                self.change_theme(x, y)
 
                 if self.num_ren == 1 and 110 <= x <= 150 and 90 <= y <= 130:
                     self.settings.lower_sound()
@@ -126,11 +126,15 @@ class MenuGameMode(GameMode):
         for i, el in enumerate(nums):
             temp = str(el).split()
             window.blit(
-                pygame.font.SysFont('Comic Sans MS', 30).render(temp[1], True, (0, 0, 0)),
+                pygame.font.SysFont('Comic Sans MS', 30).render(temp[2], True, (0, 0, 0)),
                 (300, 60 + 30 * i))
             window.blit(
-                pygame.font.SysFont('Comic Sans MS', 30).render(temp[2], True, (0, 0, 0)),
-                (300 + 60, 60 + 30 * i))
+                pygame.font.SysFont('Comic Sans MS', 30).render(temp[1], True, (0, 0, 0)),
+                (500, 60 + 30 * i))
+        self.print_button(window, self.results)
+        for el in self.results:
+            if el[4]:
+                self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
 
     def render5(self, window):
         window.blit(pygame.image.load("assets/menu_background.jpg"), (0, 0))
