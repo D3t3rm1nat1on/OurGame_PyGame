@@ -11,9 +11,9 @@ class UserInterface(GameModeObserver):
         pygame.display.set_caption("Our Game")
         pygame.display.set_icon(pygame.image.load("assets/Pandemonica.png"))
 
-        #self.game = PlayGameMode()
-        #self.game.add_observer(self)
-        #LoadLevel("assets/sample_map.tmx", self.game).run()
+        # self.game = PlayGameMode()
+        # self.game.add_observer(self)
+        # LoadLevel("assets/sample_map.tmx", self.game).run()
 
         self.menu = MenuGameMode()
         self.menu.add_observer(self)
@@ -28,8 +28,8 @@ class UserInterface(GameModeObserver):
         while self.running:
             self.menu.process_input()
             self.menu.render(self.window)
-            #self.game.process_input()
-            #self.game.render(self.window)
+            # self.game.process_input()
+            # self.game.render(self.window)
             pygame.display.update()
             self.clock.tick(60)
 

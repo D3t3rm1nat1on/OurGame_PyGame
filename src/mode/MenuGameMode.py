@@ -12,7 +12,7 @@ class MenuGameMode(GameMode):
         self.color = [
             [(255, 20, 147), (176, 255, 46)],
             [(176, 255, 46), (255, 20, 147)]]
-        self.settings = Settings()
+        self.settings = Sound()
         self.text_theme = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Shine like a princess", (300, 90), False, -1, True, 0],
             # тема, координаты прямоуг., название, коор. текста, выделение кнопки, переход в другой рендер, доступна ли, номер темы
@@ -36,7 +36,7 @@ class MenuGameMode(GameMode):
             [self.color[self.theme][0], (150, 400, 500, 40), 'To main menu', (300, 400), False, 0]
         ]
         self.num_ren = 0
-        self.lists = [self.text, self.text_settings, self.results, 3,4,  self.text_theme]
+        self.lists = [self.text, self.text_settings, self.results, 3, 4, self.text_theme]
         self.renders = [self.render0, self.render1, self.render2, 3, 4, self.render5]
 
     def process_input(self):
@@ -55,6 +55,8 @@ class MenuGameMode(GameMode):
                         self.settings.lower_sound()
                     if self.num_ren == 1 and self.ind == 4:
                         self.settings.louder_sound()
+                    if self.num_ren == 5 and self.ind != 2:
+                        self.change_theme(self.text_theme[self.ind][3][0], self.text_theme[self.ind][3][1])
             elif self.old_y != y or self.old_x != x:
                 self.ind = -1
                 self.chosen_button(x, y, self.lists[self.num_ren])
@@ -226,7 +228,7 @@ class MenuGameMode(GameMode):
             self.button(window, el[0], el[1], el[2], el[3])
 
 
-class Settings:
+class Sound:
     def __init__(self):
         self.vol = 10
         self.play_music(self.vol)
