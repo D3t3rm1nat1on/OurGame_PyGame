@@ -19,7 +19,7 @@ class UnitLayer(Layer):
             {
                 'name': 'p_run',
                 'row': 1,
-                'max_index': 5
+                'max_index': 6
             },
             {
                 'name': 'p_jump_up',
@@ -38,9 +38,10 @@ class UnitLayer(Layer):
             tile_x = math.floor(unit.frame_index)
             animation = self.animations[unit.state.value]
             tile_y = animation['row']
-            tile = Vector2(tile_x, tile_y)
-            self.render_tile(surface, unit.position, tile)
-            if unit.frame_index < animation['max_index']:
+            if tile_x < animation['max_index']:
                 unit.frame_index += 0.25
             else:
+                tile_x = 0
                 unit.frame_index = 0
+            tile = Vector2(tile_x, tile_y)
+            self.render_tile(surface, unit.position, tile)

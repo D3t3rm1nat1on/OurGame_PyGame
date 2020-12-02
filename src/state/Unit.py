@@ -4,7 +4,7 @@ from pygame.math import Vector2
 
 
 class Unit:
-    def __init__(self, position, speed):
+    def __init__(self, position, speed, affected_by_gravity=True):
         """
 
         :type position: Vector2
@@ -12,6 +12,7 @@ class Unit:
         """
         self.position = position
         self.speed = speed
+        self.affected_by_gravity = affected_by_gravity
         self.frame_index = 0
         self.state = State.running
 

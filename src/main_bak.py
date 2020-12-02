@@ -5,7 +5,7 @@ import pygame
 from pygame.math import Vector2
 
 import src.state_bak as states
-from src.command_bak import *
+from src.command import *
 from src.state_bak import GameState
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'

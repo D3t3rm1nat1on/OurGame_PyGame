@@ -24,6 +24,7 @@ class UserInterface(GameModeObserver):
     def run(self):
         while self.running:
             self.game.process_input()
+            self.game.update()
             self.game.render(self.window)
             pygame.display.update()
             self.clock.tick(60)
