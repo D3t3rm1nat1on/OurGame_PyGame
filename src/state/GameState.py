@@ -7,6 +7,8 @@ class GameState:
     def __init__(self):
         self.world_size = Vector2(15, 10)
         self.ground = [[None] * self.world_width] * self.world_height
+        self.ground_level = 7
+        self.gravity = Vector2(0, 0.005)
         self.units = [Unit(Vector2(3, 7), Vector2(0, 0))]
 
     @property

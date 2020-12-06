@@ -1,5 +1,5 @@
 from pygame.math import Vector2
-from src.state_bak import Unit
+from state import Unit, State
 
 from .Command import Command
 
@@ -14,4 +14,5 @@ class JumpCommand(Command):
 
     def run(self):
         if self.on_ground(self.state, self.unit):
-            self.unit.speed -= Vector2(0, 14)
+            self.unit.speed -= Vector2(0, 0.14)
+            self.unit.state = State.jumping_up

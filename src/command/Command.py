@@ -8,4 +8,4 @@ class Command:
         raise NotImplementedError()
 
     def on_ground(self, state, unit):
-        return unit.position.y + unit.rect_collision.size[1] >= state.ground.y
+        return unit.position.y >= state.ground_level
