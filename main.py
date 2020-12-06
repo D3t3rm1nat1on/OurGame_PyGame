@@ -1,6 +1,6 @@
 import pygame
 
-from mode import GameModeObserver, PlayGameMode
+from mode import GameModeObserver, PlayGameMode, MenuGameMode
 from setup import LoadLevel
 
 
@@ -15,6 +15,9 @@ class UserInterface(GameModeObserver):
         self.game.add_observer(self)
         LoadLevel("assets/sample_map.tmx", self.game).run()
 
+        self.menu = MenuGameMode()
+        self.menu.add_observer(self)
+
         self.clock = pygame.time.Clock()
         self.running = True
 
@@ -23,8 +26,11 @@ class UserInterface(GameModeObserver):
 
     def run(self):
         while self.running:
-            self.game.process_input()
+
+            # self.game.process_input()
             self.game.render(self.window)
+            self.menu.process_input()
+            self.menu.render(self.window)
             pygame.display.update()
             self.clock.tick(60)
 
