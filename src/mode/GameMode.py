@@ -5,6 +5,18 @@ class GameMode:
     def add_observer(self, observer):
         self.observers.append(observer)
 
+    def notify_load_level_requested(self):
+        for observer in self.observers:
+            observer.load_level_requested()
+
+    def notify_show_game_requested(self):
+        for observer in self.observers:
+            observer.show_game_requested()
+
+    def notify_show_menu_requested(self):
+        for observer in self.observers:
+            observer.show_menu_requested()
+
     def notify_quit_requested(self):
         for observer in self.observers:
             observer.quit_requested()

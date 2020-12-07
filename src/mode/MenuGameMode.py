@@ -57,15 +57,15 @@ class MenuGameMode(GameMode):
                         self.settings.louder_sound()
                     if self.num_ren == 5 and self.ind != 2:
                         self.change_theme(self.text_theme[self.ind][3][0], self.text_theme[self.ind][3][1])
+                elif event.key == pygame.K_ESCAPE:
+                    self.notify_quit_requested()
             elif self.old_y != y or self.old_x != x:
                 self.ind = -1
                 self.chosen_button(x, y, self.lists[self.num_ren])
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.num_ren == 0 and 150 <= x <= 650 and 90 <= y <= 130:
-                    self.notify_quit_requested()
-                # game = g.GameWindow()
-                # game.run()
+                    self.notify_load_level_requested()
                 if self.num_ren == 0:
                     self.into_new_render(x, y, self.text)
                 else:
@@ -245,6 +245,6 @@ class Sound:
 
     def play_music(self, volume):
         self.vol = volume
-        pygame.mixer.music.load('assets/song.mp3')
-        pygame.mixer.music.play(-1)
+        # pygame.mixer.music.load('assets/song.mp3')
+        # pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(self.vol / 100.0)

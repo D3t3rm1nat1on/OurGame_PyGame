@@ -5,5 +5,8 @@ class GameModeObserver:
     def show_game_requested(self):
         pass
 
+    def show_menu_requested(self):
+        pass
+
     def quit_requested(self):
         pass

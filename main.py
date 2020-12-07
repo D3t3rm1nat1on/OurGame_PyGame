@@ -43,6 +43,11 @@ class UserInterface(GameModeObserver):
         if self.play_game_mode is not None:
             self.current_mode = self.Modes.Play
 
+    def show_menu_requested(self):
+        self.overlay_mode = MenuGameMode()
+        self.overlay_mode.add_observer(self)
+        self.current_mode = self.Modes.Overlay
+
     def quit_requested(self):
         self.running = False
 
