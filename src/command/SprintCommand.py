@@ -1,5 +1,6 @@
+from state import Player
+
 from .Command import Command
-from src.state_bak import Player
 
 
 class SprintCommand(Command):
@@ -12,7 +13,5 @@ class SprintCommand(Command):
 
     def run(self):
         self.player.is_sprinting = True
-        if self.player.is_sprinting and not self.player.is_crouching and self.player.stamina >= 0.5 and self.on_ground(self.state, self.player):
+        if self.player.is_sprinting and self.player.stamina >= 0.5 and self.on_ground(self.state, self.player):
             self.player.sprint()
-
-

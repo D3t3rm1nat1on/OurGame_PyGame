@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 
-from command import JumpCommand, MoveCommand
+from command import JumpCommand, MoveCommand, MovePlayerCommand, SprintCommand, SlowCommand
 from state import GameState
 from layer import UnitLayer
 
@@ -36,7 +36,23 @@ class PlayGameMode(GameMode):
                 elif event.key == pygame.K_UP:
                     command = JumpCommand(self.state, self.player)
                     self.commands.append(command)
-        command = MoveCommand(self.state, self.player)
+                elif event.key == pygame.K_LEFT:
+                    self.player.is_slowing = True
+                elif event.key == pygame.K_RIGHT:
+                    self.player.is_sprinting = True
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    self.player.is_slowing = False
+                if event.key == pygame.K_RIGHT:
+                    self.player.is_sprinting = False
+        if self.player.is_slowing:
+            command = SlowCommand(self.state, self.player)
+            self.commands.append(command)
+        elif self.player.is_sprinting:
+            command = SprintCommand(self.state, self.player)
+            self.commands.append(command)
+
+        command = MovePlayerCommand(self.state, self.player)
         self.commands.append(command)
 
     def update(self):
@@ -49,5 +65,9 @@ class PlayGameMode(GameMode):
 
         for layer in self.layers:
             layer.render(self.game_window)
+
+        coll = pygame.Rect(self.player.position.elementwise() * self.cell_size, self.cell_size)
+
+        pygame.draw.rect(self.game_window, (73, 111, 13), coll, 1)
 
         pygame.transform.scale(self.game_window, window.get_size(), window)

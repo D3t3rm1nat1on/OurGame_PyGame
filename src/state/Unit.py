@@ -1,10 +1,11 @@
 import enum
 
+import pygame
 from pygame.math import Vector2
 
 
 class Unit:
-    def __init__(self, position, speed, affected_by_gravity=True):
+    def __init__(self, position, speed, affected_by_gravity=True, size=Vector2(1, 1)):
         """
 
         :type position: Vector2
@@ -13,8 +14,15 @@ class Unit:
         self.position = position
         self.speed = speed
         self.affected_by_gravity = affected_by_gravity
+        self.size = size
         self.frame_index = 0
         self.state = State.running
+        self.is_slowing = False
+        self.is_sprinting = False
+        self.is_collision_able = True
+
+    def unique_movement(self):
+        pass
 
 
 class State(enum.Enum):
