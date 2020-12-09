@@ -18,18 +18,28 @@ class UnitLayer(Layer):
         self.animations = [
             {
                 'name': 'p_run',
-                'row': 1,
+                'row': 0,
                 'max_index': 6
             },
             {
                 'name': 'p_jump_up',
-                'row': 6,
-                'max_index': 3
+                'row': 1,
+                'max_index': 3,
             },
             {
                 'name': 'p_jump_down',
-                'row': 5,
-                'max_index': 3
+                'row': 2,
+                'max_index': 3,
+            },
+            {
+                'name': 'g_run',
+                'row': 3,
+                'max_index': 6,
+            },
+            {
+                'name': 'b_fly',
+                'row': 4,
+                'max_index': 3,
             },
         ]
 
@@ -44,4 +54,4 @@ class UnitLayer(Layer):
                 tile_x = 0
                 unit.frame_index = 0
             tile = Vector2(tile_x, tile_y)
-            self.render_tile(surface, unit.position, tile)
+            self.render_tile(surface, unit.position, tile, unit.size)

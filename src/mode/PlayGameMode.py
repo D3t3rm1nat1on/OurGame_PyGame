@@ -19,7 +19,7 @@ class PlayGameMode(GameMode):
         self.player = self.state.units[0]
 
         self.layers = [None] * 3
-        self.layers[2] = (UnitLayer(self.cell_size, "assets/herochar_spritesheet.png", self.state))
+        self.layers[2] = (UnitLayer(self.cell_size, "assets/units_spritesheet_test.png", self.state))
         self.background = None
 
         self.commands = []
