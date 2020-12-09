@@ -23,7 +23,8 @@ class MenuGameMode(GameMode):
             [self.color[self.theme][0], (150, 90, 500, 40), "Let's go!", (300, 90), False, 140800],
             [self.color[self.theme][0], (150, 150, 500, 40), "Settings", (300, 150), False, 1],
             [self.color[self.theme][0], (150, 210, 500, 40), "Results", (300, 210), False, 2],
-            [self.color[self.theme][0], (150, 270, 500, 40), "Achievements", (300, 270), False, 3]]
+            [self.color[self.theme][0], (150, 270, 500, 40), "Achievements", (300, 270), False, 3]
+        ]
 
         self.text_settings = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Sound:" + str(self.settings.vol) + "%", (300, 90), False,
@@ -47,6 +48,8 @@ class MenuGameMode(GameMode):
                 self.old_x, self.old_y = x, y
                 self.move_pointer(event)
                 if event.key == pygame.K_RETURN:
+                    if self.ind == 0 and self.lists[self.num_ren][self.ind][5] == 140800:
+                        self.notify_load_level_requested()
                     if self.ind != -1 and self.lists[self.num_ren][self.ind][5] != -1:
                         self.lists[self.num_ren][self.ind][4] = False
                         self.num_ren = self.lists[self.num_ren][self.ind][5]
@@ -95,7 +98,6 @@ class MenuGameMode(GameMode):
                 function(window)
 
     def render0(self, window):
-        #window.blit(pygame.image.load("assets/menu_background.jpg"), (0, 0))
         window.blit(
             pygame.font.SysFont('Comic Sans MS', 30).render('Start menu', True, (0, 0, 0)),
             (300, 20))
@@ -105,7 +107,6 @@ class MenuGameMode(GameMode):
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
 
     def render1(self, window):
-        #window.blit(pygame.image.load("assets/menu_background.jpg"), (0, 0))
         window.blit(
             pygame.font.SysFont('Comic Sans MS', 30).render('Settings', True, (0, 0, 0)),
             (300, 20))
@@ -116,7 +117,6 @@ class MenuGameMode(GameMode):
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
 
     def render2(self, window):
-        #window.blit(pygame.image.load("assets/menu_background.jpg"), (0, 0))
         window.blit(
             pygame.font.SysFont('Comic Sans MS', 30).render('Results', True, (0, 0, 0)),
             (200, 20))
@@ -139,7 +139,6 @@ class MenuGameMode(GameMode):
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
 
     def render5(self, window):
-        #window.blit(pygame.image.load("assets/menu_background.jpg"), (0, 0))
         window.blit(pygame.font.SysFont('Comic Sans MS', 30).render('Themes', True, (0, 0, 0)),
                     (300, 20))
         self.print_button(window, self.text_theme)
