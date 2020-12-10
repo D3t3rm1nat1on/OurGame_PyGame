@@ -3,6 +3,7 @@ import enum
 import pygame
 
 from mode import GameModeObserver, PlayGameMode, MenuGameMode
+from mode.PauseMode import PauseMode
 from setup import LoadLevel
 
 
@@ -10,6 +11,7 @@ class UserInterface(GameModeObserver):
     class Modes(enum.Enum):
         Overlay = 0
         Play = 1
+        Pause = 2
 
     def __init__(self):
         pygame.init()
@@ -18,6 +20,7 @@ class UserInterface(GameModeObserver):
         pygame.display.set_icon(pygame.image.load("assets/Pandemonica.png"))
 
         self.play_game_mode = None
+        self.load_level_requested()
         self.overlay_mode = MenuGameMode()
         self.overlay_mode.add_observer(self)
         self.current_mode = self.Modes.Overlay
@@ -48,6 +51,11 @@ class UserInterface(GameModeObserver):
         self.overlay_mode.add_observer(self)
         self.current_mode = self.Modes.Overlay
 
+    def show_pause_requested(self):
+        self.overlay_mode = PauseMode()
+       # self.overlay_mode.add_observer(self)
+        self.current_mode = self.Modes.Pause
+
     def quit_requested(self):
         self.running = False
 
@@ -67,6 +75,8 @@ class UserInterface(GameModeObserver):
             if self.current_mode == self.Modes.Overlay:
                 self.overlay_mode.render(self.window)
 
+            if self.current_mode == self.Modes.Pause:
+                self.overlay_mode.render(self.window)
             # self.game.process_input()
             # self.game.update()
             # self.game.render(self.window)
