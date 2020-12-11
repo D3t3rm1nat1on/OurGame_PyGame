@@ -16,6 +16,8 @@ class GameState:
         self.border_left = 0.0
         self.border_right = 7.0
 
+        self.score = 0
+
     @property
     def world_width(self):
         return int(self.world_size.x)

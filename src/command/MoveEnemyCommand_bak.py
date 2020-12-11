@@ -1,8 +1,9 @@
 import random
 from datetime import datetime
+import pygame
 from pygame.math import Vector2
 
-from src.state_bak import Unit
+from state import Unit
 from .MoveCommand import MoveCommand
 
 
@@ -17,20 +18,22 @@ class MoveEnemyCommand(MoveCommand):
         super().run()
         enemy = self.unit
         # враг ушел за экран (успешный dodge)
-        if enemy.rect_collision.right <= -enemy.full_size.x:
-            rand = random.randint(self.state.world_size.x / 2, self.state.world_size.x)
-            enemy.position = Vector2(rand, self.state.ground.y - 100)
+        if enemy.position.x + enemy.size.x <= -enemy.size.x:
+            rand = random.randint(int(self.state.world_size.x / 2), int(self.state.world_size.x))
+            enemy.position = Vector2(rand, self.state.ground_level - 1)
             self.state.score += 1
 
-        if not self.unit.is_alive:
-            self.state.enemies.remove(self.unit)
+        if not enemy.is_alive:
+            self.state.units.remove(enemy)
 
+        enemy_col = pygame.Rect(enemy.position.elementwise() * Vector2(16, 16), (16, 16))
+        player_col = pygame.Rect(self.player_unit.position.elementwise() * Vector2(16, 16), (16, 16))
         # враг ударил игрока
-        if self.unit.rect_collision.colliderect(self.player_unit.rect_collision):
-            self.unit.hit()
-            if self.unit.is_killable:
-                self.state.enemies.remove(self.unit)
-            self.player_unit.position.x -= 20
+        if enemy_col.colliderect(player_col) and (enemy.position.x - self.player_unit.position.x) < 0.75:
+            # self.unit.hit()
+            # if self.unit.is_killable:
+            # self.state.units.remove(enemy)
+            self.player_unit.position.x -= 0.75 - (enemy.position.x - self.player_unit.position.x)
             if self.player_unit.position.x < 0:
                 print("LOG: PakeT T H I C C")
                 self.serialize()
@@ -42,7 +45,7 @@ class MoveEnemyCommand(MoveCommand):
         now = datetime.now()
         date = '.'.join([str(now.day), str(now.month), str(now.year)])
         result = [1, self.state.score, date]
-        with open('results.txt', 'r') as f:
+        with open('src/results.txt', 'r') as f:
             nums = f.read().splitlines()
         results = []
         for res in nums:
