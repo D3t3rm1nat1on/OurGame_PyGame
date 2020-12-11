@@ -8,5 +8,8 @@ class GameModeObserver:
     def show_menu_requested(self):
         pass
 
+    def show_pause_requested(self):
+        pass
+
     def quit_requested(self):
         pass

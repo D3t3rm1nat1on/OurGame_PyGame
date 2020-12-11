@@ -5,6 +5,7 @@ class MenuFunctional:
     color = [
         [(255, 20, 147), (176, 255, 46)],
         [(176, 255, 46), (255, 20, 147)]]
+    theme = 0
 
     def move_pointer(self, ev):
         cur_list = self.lists[self.num_ren]

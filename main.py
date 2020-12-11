@@ -20,6 +20,7 @@ class UserInterface(GameModeObserver):
         pygame.display.set_icon(pygame.image.load("assets/Pandemonica.png"))
 
         self.play_game_mode = None
+        self.overlay_pause_mode = None
         self.load_level_requested()
         self.overlay_mode = MenuGameMode()
         self.overlay_mode.add_observer(self)
@@ -52,8 +53,8 @@ class UserInterface(GameModeObserver):
         self.current_mode = self.Modes.Overlay
 
     def show_pause_requested(self):
-        self.overlay_mode = PauseMode()
-       # self.overlay_mode.add_observer(self)
+        self.overlay_pause_mode = PauseMode()
+        self.overlay_pause_mode.add_observer(self)
         self.current_mode = self.Modes.Pause
 
     def quit_requested(self):
@@ -64,9 +65,13 @@ class UserInterface(GameModeObserver):
             if self.current_mode == self.Modes.Overlay:
                 self.overlay_mode.process_input()
                 self.overlay_mode.update()
+            elif self.current_mode == self.Modes.Pause:
+                self.overlay_pause_mode.process_input()
+                self.overlay_mode.update()
             elif self.play_game_mode is not None:
                 self.play_game_mode.process_input()
                 self.play_game_mode.update()
+
 
             if self.play_game_mode is not None:
                 self.play_game_mode.render(self.window)
@@ -76,7 +81,8 @@ class UserInterface(GameModeObserver):
                 self.overlay_mode.render(self.window)
 
             if self.current_mode == self.Modes.Pause:
-                self.overlay_mode.render(self.window)
+                self.overlay_pause_mode.render(self.window)
+
             # self.game.process_input()
             # self.game.update()
             # self.game.render(self.window)

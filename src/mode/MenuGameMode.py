@@ -7,7 +7,7 @@ from .MenuFuctionalMode import MenuFunctional, Sound
 class MenuGameMode(GameMode, MenuFunctional):
     def __init__(self):
         super().__init__()
-        self.theme = 0
+        #self.theme = 0
         self.old_x, self.old_y = 0, 0
         self.ind = -1
         self.settings = Sound()
@@ -23,7 +23,8 @@ class MenuGameMode(GameMode, MenuFunctional):
             [self.color[self.theme][0], (150, 90, 500, 40), "Let's go!", (300, 90), False, 140800],
             [self.color[self.theme][0], (150, 150, 500, 40), "Settings", (300, 150), False, 1],
             [self.color[self.theme][0], (150, 210, 500, 40), "Results", (300, 210), False, 2],
-            [self.color[self.theme][0], (150, 270, 500, 40), "Achievements", (300, 270), False, 3]
+            [self.color[self.theme][0], (150, 270, 500, 40), "Achievements", (300, 270), False, 3],
+            [self.color[self.theme][0], (150, 330, 500, 40), "Exit", (300, 330), False, 177013]
         ]
         self.text_settings = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Sound:" + str(self.settings.vol) + "%", (300, 90), False,
@@ -66,8 +67,8 @@ class MenuGameMode(GameMode, MenuFunctional):
                 self.chosen_button(x, y, self.lists[self.num_ren])
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.num_ren == 0 and 150 <= x <= 650 and 270 <= y <= 310:
-                    self.notify_show_pause_requested()
+                # if self.num_ren == 0 and 150 <= x <= 650 and 270 <= y <= 310:
+                #     self.notify_show_pause_requested()
                 if self.num_ren == 0 and 150 <= x <= 650 and 90 <= y <= 130:
                     self.notify_load_level_requested()
                 if self.num_ren == 0:
@@ -87,7 +88,7 @@ class MenuGameMode(GameMode, MenuFunctional):
                     self.settings.lower_sound()
                 if self.num_ren == 1 and 660 <= x <= 700 and 90 <= y <= 130:
                     self.settings.louder_sound()
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or self.num_ren == 177013:
                 self.notify_quit_requested()
 
     def update(self):
@@ -151,7 +152,7 @@ class MenuGameMode(GameMode, MenuFunctional):
         for el in self.text_theme:
             if el[1][0] <= x <= (el[1][0] + el[1][2]) and el[1][1] <= y <= (el[1][3] + el[1][1]):
                 if el[6]:
-                    self.theme = el[7]
+                    MenuFunctional.theme = el[7]
 
     def button_soung(self, ev):
         if self.text_settings[0][4]:
