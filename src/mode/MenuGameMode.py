@@ -46,7 +46,7 @@ class MenuGameMode(GameMode, MenuFunctional):
 
             if event.type == pygame.KEYDOWN:
                 self.old_x, self.old_y = x, y
-                self.move_pointer(event)
+                self.move_pointer(event, self.lists[self.num_ren], 1)
                 if event.key == pygame.K_RETURN:
                     if self.ind == 0 and self.lists[self.num_ren][self.ind][5] == 140800:
                         self.notify_load_level_requested()

@@ -7,9 +7,8 @@ class MenuFunctional:
         [(176, 255, 46), (255, 20, 147)]]
     theme = 0
 
-    def move_pointer(self, ev):
-        cur_list = self.lists[self.num_ren]
-        if self.num_ren == 1 and (ev.key == pygame.K_RIGHT or ev.key == pygame.K_LEFT):
+    def move_pointer(self, ev, cur_list, menu_type):
+        if menu_type == 1 and self.num_ren == 1 and (ev.key == pygame.K_RIGHT or ev.key == pygame.K_LEFT):
             self.button_soung(ev)
             return
         if self.ind > 0:
@@ -18,7 +17,7 @@ class MenuFunctional:
                 cur_list[self.ind + 1][4] = False
                 cur_list[self.ind][4] = True
         if self.ind < len(cur_list) - 1:
-            if self.num_ren == 1 and self.ind == 2:
+            if menu_type == 1 and self.num_ren == 1 and self.ind == 2:
                 return
             if ev.key == pygame.K_DOWN:
                 self.ind += 1

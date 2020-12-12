@@ -7,6 +7,7 @@ from mode.MenuFuctionalMode import MenuFunctional
 class PauseMode(GameMode, MenuFunctional):
     def __init__(self):
         super().__init__()
+        self.ind = -1
         self.text = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Continue", (300, 90), False],
             [self.color[self.theme][0], (150, 150, 500, 40), "To main menu", (300, 150), False]
@@ -20,27 +21,15 @@ class PauseMode(GameMode, MenuFunctional):
                 if event.key == pygame.K_ESCAPE:
                     self.notify_show_game_requested()
                 self.old_x, self.old_y = x, y
-                self.m(event)
-                #if event.key == pygame.K_RETURN:
-                # if self.num_ren == 0 and 150 <= x <= 650 and 90 <= y <= 130:
-                #     self.notify_load_level_requested()
-    def m (self, ev):
-        cur_list = self.text
-        if self.ind > 0:
-            if ev.key == pygame.K_UP:
-                self.ind -= 1
-                cur_list[self.ind + 1][4] = False
-                cur_list[self.ind][4] = True
-        if self.ind < len(cur_list) - 1:
-            if self.num_ren == 1 and self.ind == 2:
-                return
-            if ev.key == pygame.K_DOWN:
-                self.ind += 1
-                if self.ind != 0:
-                    cur_list[self.ind - 1][4] = False
-                cur_list[self.ind][4] = True
-                    # self.show_game_requested()
-        #  if event.type == pygame.MOUSEBUTTONDOWN:
+                self.move_pointer(event, self.text, 2)
+                if event.key == pygame.K_RETURN:
+                    if self.ind == 0:
+                        self.notify_show_game_requested()
+                    else:
+                        self.notify_show_menu_requested()
+            elif self.old_y != y or self.old_x != x:
+                self.ind = -1
+                self.chosen_button(x, y, self.lists[self.num_ren])
 
     def update(self):
         pass
