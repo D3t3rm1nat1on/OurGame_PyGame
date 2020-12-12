@@ -23,8 +23,7 @@ class MenuGameMode(GameMode, MenuFunctional):
             [self.color[self.theme][0], (150, 90, 500, 40), "Let's go!", (300, 90), False, 140800],
             [self.color[self.theme][0], (150, 150, 500, 40), "Settings", (300, 150), False, 1],
             [self.color[self.theme][0], (150, 210, 500, 40), "Results", (300, 210), False, 2],
-            [self.color[self.theme][0], (150, 270, 500, 40), "Achievements", (300, 270), False, 3],
-            [self.color[self.theme][0], (150, 330, 500, 40), "Exit", (300, 330), False, 177013]
+            [self.color[self.theme][0], (150, 270, 500, 40), "Exit", (300, 270), False, 177013]
         ]
         self.text_settings = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Sound:" + str(self.settings.vol) + "%", (300, 90), False,
@@ -67,8 +66,6 @@ class MenuGameMode(GameMode, MenuFunctional):
                 self.chosen_button(x, y, self.lists[self.num_ren])
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # if self.num_ren == 0 and 150 <= x <= 650 and 270 <= y <= 310:
-                #     self.notify_show_pause_requested()
                 if self.num_ren == 0 and 150 <= x <= 650 and 90 <= y <= 130:
                     self.notify_load_level_requested()
                 if self.num_ren == 0:
