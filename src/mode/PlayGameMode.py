@@ -32,7 +32,6 @@ class PlayGameMode(GameMode):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.notify_show_pause_requested()
-                    #self.notify_show_menu_requested()
                     break
                 elif event.key == pygame.K_UP:
                     command = JumpCommand(self.state, self.player)

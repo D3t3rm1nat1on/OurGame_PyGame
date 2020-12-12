@@ -7,7 +7,6 @@ from .MenuFuctionalMode import MenuFunctional, Sound
 class MenuGameMode(GameMode, MenuFunctional):
     def __init__(self):
         super().__init__()
-        #self.theme = 0
         self.old_x, self.old_y = 0, 0
         self.ind = -1
         self.settings = Sound()

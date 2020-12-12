@@ -72,7 +72,6 @@ class UserInterface(GameModeObserver):
                 self.play_game_mode.process_input()
                 self.play_game_mode.update()
 
-
             if self.play_game_mode is not None:
                 self.play_game_mode.render(self.window)
             else:
