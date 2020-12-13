@@ -56,9 +56,10 @@ class MenuFunctional:
 
 
 class Sound:
-    vol = 10
+    vol = 0
 
     def __init__(self):
+        self.read_music_volume()
         self.play_music(self.vol)
 
     def lower_sound(self):
@@ -76,3 +77,8 @@ class Sound:
         pygame.mixer.music.load('assets/song.mp3')
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(self.vol / 100.0)
+
+    def read_music_volume(self):
+        with open('src/config.txt', 'r') as f:
+            nums = f.read()
+        Sound.vol = int(nums)

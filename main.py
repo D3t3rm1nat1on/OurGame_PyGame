@@ -3,6 +3,7 @@ import enum
 import pygame
 
 from mode import GameModeObserver, PlayGameMode, MenuGameMode
+from mode.MenuFuctionalMode import Sound
 from mode.PauseMode import PauseMode
 from setup import LoadLevel
 
@@ -48,6 +49,8 @@ class UserInterface(GameModeObserver):
             self.current_mode = self.Modes.Play
 
     def show_menu_requested(self):
+        with open('src/config.txt', 'w') as f:
+            f.write(str(self.overlay_mode.settings.vol))
         self.overlay_mode = MenuGameMode()
         self.overlay_mode.add_observer(self)
         self.current_mode = self.Modes.Overlay
@@ -58,6 +61,8 @@ class UserInterface(GameModeObserver):
         self.current_mode = self.Modes.Pause
 
     def quit_requested(self):
+        with open('src/config.txt', 'w') as f:
+            f.write(str('10'))
         self.running = False
 
     def run(self):

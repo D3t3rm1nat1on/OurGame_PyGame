@@ -28,7 +28,7 @@ class MenuGameMode(GameMode, MenuFunctional):
             [self.color[self.theme][0], (150, 90, 500, 40), "Sound:" + str(self.settings.vol) + "%", (300, 90), False,
              -1],
             [self.color[self.theme][0], (150, 150, 500, 40), "Unlocked themes", (300, 150), False, 5],
-            [self.color[self.theme][0], (150, 270, 500, 40), 'To main menu', (300, 270), False, 0],
+            [self.color[self.theme][0], (150, 210, 500, 40), 'To main menu', (300, 210), False, 0],
             [self.color[self.theme][0], (110, 90, 30, 40), '-', (120, 85), False, -1],
             [self.color[self.theme][0], (660, 90, 30, 40), '+', (670, 85), False, -1]
         ]
