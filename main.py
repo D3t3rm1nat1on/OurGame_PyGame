@@ -2,9 +2,7 @@ import enum
 
 import pygame
 
-from mode import GameModeObserver, PlayGameMode, MenuGameMode
-from mode.MenuFuctionalMode import Sound
-from mode.PauseMode import PauseMode
+from mode import GameModeObserver, PlayGameMode, MenuGameMode, PauseMode
 from setup import LoadLevel
 
 
@@ -26,13 +24,6 @@ class UserInterface(GameModeObserver):
         self.overlay_mode = MenuGameMode()
         self.overlay_mode.add_observer(self)
         self.current_mode = self.Modes.Overlay
-
-        # self.game = PlayGameMode()
-        # self.game.add_observer(self)
-        # LoadLevel("assets/sample_map.tmx", self.game).run()
-
-        # self.menu = MenuGameMode()
-        # self.menu.add_observer(self)
 
         self.clock = pygame.time.Clock()
         self.running = True
@@ -87,11 +78,6 @@ class UserInterface(GameModeObserver):
             if self.current_mode == self.Modes.Pause:
                 self.overlay_pause_mode.render(self.window)
 
-            # self.game.process_input()
-            # self.game.update()
-            # self.game.render(self.window)
-            # self.menu.process_input()
-            # self.menu.render(self.window)
             pygame.display.update()
             self.clock.tick(60)
 

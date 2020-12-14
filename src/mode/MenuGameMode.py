@@ -14,7 +14,8 @@ class MenuGameMode(GameMode, MenuFunctional):
 
         self.text_theme = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Shine like a princess", (300, 90), False, -1, True, 0],
-            # тема, координаты прямоуг., название, коор. текста, выделение кнопки, переход в другой рендер, доступна ли, номер темы
+            # тема, координаты прямоуг., название, коор. текста, выделение кнопки, переход в другой рендер,
+            # доступна ли, номер темы
             [self.color[self.theme][0], (150, 150, 500, 40), "Toxic frogs", (300, 150), False, -1, True, 1],
             [self.color[self.theme][0], (150, 210, 500, 40), 'Back', (300, 210), False, 1, False]
         ]

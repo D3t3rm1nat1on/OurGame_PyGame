@@ -13,4 +13,4 @@ class SlowCommand(Command):
 
     def run(self):
         if self.on_ground(self.state, self.unit):
-            self.unit.speed.x -= .0003
+            self.unit.speed.x -= .003

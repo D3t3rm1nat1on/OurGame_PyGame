@@ -1,5 +1,3 @@
-from pygame.math import Vector2
-
 from .Unit import Unit
 
 

@@ -31,9 +31,6 @@ class MoveEnemyCommand(MoveCommand):
         player_col = pygame.Rect(self.player_unit.position.elementwise() * Vector2(16, 16), (16, 16))
         # враг ударил игрока
         if enemy_col.colliderect(player_col) and (enemy.position.x - self.player_unit.position.x) < 0.75:
-            # self.unit.hit()
-            # if self.unit.is_killable:
-            # self.state.units.remove(enemy)
             self.player_unit.position.x -= 0.75 - (enemy.position.x - self.player_unit.position.x)
             if self.player_unit.position.x < 0:
                 print("LOG: PakeT T H I C C")
@@ -46,7 +43,7 @@ class MoveEnemyCommand(MoveCommand):
         now = datetime.now()
         date = '.'.join([str(now.day), str(now.month), str(now.year)])
         result = [1, self.state.score, date]
-        with open('src/results.txt', 'r') as f:
+        with open('results.txt', 'r') as f:
             nums = f.read().splitlines()
         results = []
         for res in nums:

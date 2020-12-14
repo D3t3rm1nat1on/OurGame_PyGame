@@ -20,7 +20,7 @@ class MoveCommand(Command):
             self.unit.speed += self.state.gravity
         self.unit.position += self.unit.speed
         if self.on_ground(self.state, self.unit) and self.unit.speed.y >= 0 and self.unit.is_collision_able:
-            self.unit.position.y = self.state.ground_level  # - self.unit.rect_collision.size[1]
+            self.unit.position.y = self.state.ground_level
             self.unit.speed = Vector2(self.unit.speed.x, 0)
         if self.unit.state == State.jumping_up and self.unit.speed.y >= 0:
             self.unit.state = State.jumping_down

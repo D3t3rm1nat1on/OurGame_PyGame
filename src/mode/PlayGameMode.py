@@ -1,9 +1,9 @@
 import pygame
 from pygame.math import Vector2
 
-from command import JumpCommand, MoveCommand, MovePlayerCommand, SprintCommand, SlowCommand, MoveEnemyCommand
-from state import GameState
+from command import JumpCommand, MovePlayerCommand, SprintCommand, SlowCommand, MoveEnemyCommand
 from layer import UnitLayer
+from state import GameState
 
 from .GameMode import GameMode
 
@@ -20,7 +20,6 @@ class PlayGameMode(GameMode):
 
         self.layers = [None] * 3
         self.layers[2] = (UnitLayer(self.cell_size, "assets/units_spritesheet_test.png", self.state))
-        self.background = None
 
         self.commands = []
 
@@ -69,9 +68,5 @@ class PlayGameMode(GameMode):
 
         for layer in self.layers:
             layer.render(self.game_window)
-
-        coll = pygame.Rect(self.player.position.elementwise() * self.cell_size, self.cell_size)
-
-        pygame.draw.rect(self.game_window, (73, 111, 13), coll, 1)
 
         pygame.transform.scale(self.game_window, window.get_size(), window)
