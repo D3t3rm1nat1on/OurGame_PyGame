@@ -18,8 +18,8 @@ class PlayGameMode(GameMode):
         self.state = GameState()
         self.player = self.state.units[0]
 
-        self.layers = [None] * 3
-        self.layers[2] = (UnitLayer(self.cell_size, "assets/units_spritesheet_test.png", self.state))
+        self.layers = [None] * 4
+        self.layers[3] = (UnitLayer(self.cell_size, "assets/units_spritesheet_test.png", self.state))
 
         self.commands = []
 
@@ -62,6 +62,14 @@ class PlayGameMode(GameMode):
         for command in self.commands:
             command.run()
         self.commands.clear()
+
+        # background rolling
+        if self.layers[0].position .x > -self.game_window.get_width() and self.layers[1].position.x > 0:
+            self.layers[0].position.x -= 0.5
+            self.layers[1].position.x -= 0.5
+        else:
+            self.layers[0].position.x = 0
+            self.layers[1].position.x = 240
 
     def render(self, window):
         self.game_window.fill((0, 0, 0))
