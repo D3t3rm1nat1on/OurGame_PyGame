@@ -70,3 +70,10 @@ class PlayGameMode(GameMode):
             layer.render(self.game_window)
 
         pygame.transform.scale(self.game_window, window.get_size(), window)
+
+        text = "Score: " + str(self.state.score)
+        window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)), (0, 0))
+        window.blit(
+            pygame.font.SysFont('Comic Sans MS', 10).render(str(self.player.speed.x), True, (0, 0, 0)),
+            (150, 0))
+        pygame.draw.rect(window, (0, 30, 8), (0, 50, self.player.stamina, 15))
