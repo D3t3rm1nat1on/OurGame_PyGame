@@ -118,7 +118,7 @@ class MenuGameMode(GameMode, MenuFunctional):
         window.blit(
             pygame.font.SysFont('Comic Sans MS', 30).render('Results', True, (0, 0, 0)),
             (200, 20))
-        with open('src/results.txt', 'r') as f:
+        with open('results.txt', 'r') as f:
             nums = f.read().splitlines()
         window.blit(
             pygame.font.SysFont('Comic Sans MS', 30).render('Your best score: ', True, (0, 0, 0)),
