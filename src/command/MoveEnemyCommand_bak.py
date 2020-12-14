@@ -26,7 +26,8 @@ class MoveEnemyCommand(MoveCommand):
         if not enemy.is_alive:
             self.state.units.remove(enemy)
 
-        enemy_col = pygame.Rect(enemy.position.elementwise() * Vector2(16, 16), (16, 16))
+        enemy_col = pygame.Rect(enemy.position.elementwise() * Vector2(16, 16),
+                                enemy.size.elementwise() * Vector2(16, 16))
         player_col = pygame.Rect(self.player_unit.position.elementwise() * Vector2(16, 16), (16, 16))
         # враг ударил игрока
         if enemy_col.colliderect(player_col) and (enemy.position.x - self.player_unit.position.x) < 0.75:
