@@ -9,6 +9,7 @@ class State(enum.Enum):
     jumping_down = 2
     g_running = 3
     b_fly = 4
+    coin = 5
 
 
 class Unit:

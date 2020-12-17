@@ -41,6 +41,11 @@ class UnitLayer(Layer):
                 'row': 4,
                 'max_index': 3,
             },
+            {
+                'name': 'coin',
+                'row': 5,
+                'max_index': 6,
+            },
         ]
 
     def render(self, surface):
