@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 
-from command import JumpCommand, MovePlayerCommand, SprintCommand, SlowCommand, MoveEnemyCommand, MoveCommand
+from command import JumpCommand, MovePlayerCommand, SprintCommand, SlowCommand, MoveEnemyCommand, MoveCommand, MoveItemCommand
 from layer import UnitLayer, ItemLayer
 from state import GameState
 
@@ -60,7 +60,8 @@ class PlayGameMode(GameMode):
             self.commands.append(command)
 
         for item in self.state.items:
-            command = MoveCommand(self.state, item)
+            command = MoveItemCommand(self.state, item, self.player)
+            # command = MoveCommand(self.state, item)
             self.commands.append(command)
 
     def update(self):
