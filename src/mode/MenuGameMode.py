@@ -121,6 +121,9 @@ class MenuGameMode(GameMode, MenuFunctional):
         for el in self.text:
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
+        Layer(Vector2(16, 16), "assets/units_spritesheet.png").render_tile(window, Vector2(47, 31),
+                                                                           Vector2(2, 5),
+                                                                           Vector2(0.5, 0.5))
 
     def render1(self, window):
         window.blit(
@@ -131,6 +134,7 @@ class MenuGameMode(GameMode, MenuFunctional):
         for el in self.text_settings:
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
+
 
     def render2(self, window):
         window.blit(
@@ -172,7 +176,7 @@ class MenuGameMode(GameMode, MenuFunctional):
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
 
-    # Layer(Vector2(16, 16), "assets/units_spritesheet.png").render_tile(window, Vector2(47, 31),
+    # Layer(Vector2(160, 160), "assets/units_spritesheet.png").render_tile(window, Vector2(47, 31),
     #                                                                    Vector2(2, 5),
     #                                                                    Vector2(0.5, 0.5))
 
@@ -192,7 +196,7 @@ class MenuGameMode(GameMode, MenuFunctional):
                 break
 
     def buy_perk(self):
-        if not self.shop[self.ind][6]:
+        if self.shop[self.ind][5]==-1 and not self.shop[self.ind][6]:
             with open('money.txt', 'r') as f:
                 money = int(f.read())
             if money >= self.data[self.ind]['price']:
