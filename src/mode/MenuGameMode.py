@@ -73,6 +73,8 @@ class MenuGameMode(GameMode, MenuFunctional):
                         self.settings.louder_sound()
                     if self.num_ren == 5 and self.ind != 2:
                         self.change_theme(self.text_theme[self.ind][3][0], self.text_theme[self.ind][3][1])
+                    if self.num_ren == 4:
+                        self.buy_perk()
                 elif event.key == pygame.K_ESCAPE:
                     self.notify_quit_requested()
             elif self.old_y != y or self.old_x != x:
