@@ -176,25 +176,10 @@ class MenuGameMode(GameMode, MenuFunctional):
                         el['desc_position'])
         self.check_perk_status()
         self.print_button(window, self.shop)
-        # self.render_icons(window)
         for el in self.shop:
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
-
-    # Layer(Vector2(160, 160), "assets/units_spritesheet.png").render_tile(window, Vector2(47, 31),
-    #                                                                    Vector2(2, 5),
-    #                                                                    Vector2(0.5, 0.5))
-    # def render_icons(self, window):
-    #     scaling = 6
-    #     texture = pygame.image.load("assets/units_spritesheet.png")
-    #     t = pygame.Surface((texture.get_width() * scaling, texture.get_height() * scaling))
-    #     pygame.transform.scale(texture, t.get_size(), t)
-    #     for i in range(3):
-    #         texture_point = (150, 150 + i * 60)
-    #         sp_p = (3 * 96, (5 + i * 1) * 96)
-    #         sprite_point = (3 * 48, (5 + i * 1) * 48)
-    #         texture_rect = pygame.Rect(texture_point, sprite_point)
-    #         window.blit(t, sp_p, texture_rect)
+        self.render_icons(window)
 
     def check_perk_status(self):
         for j, availability in enumerate(self.data):

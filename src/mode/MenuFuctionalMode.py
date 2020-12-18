@@ -1,4 +1,7 @@
 import pygame
+from pygame.math import Vector2
+
+from layer import Layer
 
 
 class MenuFunctional:
@@ -54,16 +57,11 @@ class MenuFunctional:
         for i, el in enumerate(text):
             self.button(window, el[0], el[1], el[2], el[3])
 
-    # def render_icons(self, window):
-    #     scaling = 6
-    #     texture = pygame.image.load("assets/units_spritesheet.png")
-    #     pygame.transform.scale(texture, (texture.get_width() * scaling, texture.get_height() * scaling))
-    #     for i in range(3):
-    #         texture_point = (150, 150 + i * 60)
-    #         sp_p = (3 * 96, (5 + i * 1) * 96)
-    #         sprite_point = (3 * 48, (5 + i * 1) * 48)
-    #         texture_rect = pygame.Rect(texture_point, sprite_point)
-    #         window.blit(texture, sp_p, texture_rect)
+    def render_icons(self, window):
+        layer = Layer(Vector2(64, 64), "assets/units_spritesheet_scaled.png")
+        for i in range(3):
+            layer.render_tile(window, Vector2(3.5, 1.2 + i * 1), Vector2(3, 6 + i * 1), Vector2(0.5, 0.5))
+
 
 
 class Sound:
