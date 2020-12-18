@@ -46,6 +46,9 @@ class PauseMode(GameMode, MenuFunctional):
         pass
 
     def render(self, window):
+        window.blit(
+            pygame.font.SysFont('Comic Sans MS', 30).render("Pause", True, (0, 0, 0)),
+            (300, 20))
         pygame.draw.rect(window, (0, 0, 0), (120, 80, 510, 90))
         self.print_button(window, self.text)
         for el in self.text:

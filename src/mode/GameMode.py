@@ -21,6 +21,10 @@ class GameMode:
         for observer in self.observers:
             observer.show_pause_requested()
 
+    def notify_show_perk_requested(self):
+        for observer in self.observers:
+            observer.show_perks_requested()
+
     def notify_quit_requested(self):
         for observer in self.observers:
             observer.quit_requested()

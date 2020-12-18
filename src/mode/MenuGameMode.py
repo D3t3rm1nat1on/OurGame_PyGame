@@ -63,7 +63,8 @@ class MenuGameMode(GameMode, MenuFunctional):
                 self.move_pointer(event, self.lists[self.num_ren], 1)
                 if event.key == pygame.K_RETURN:
                     if self.ind == 0 and self.lists[self.num_ren][self.ind][5] == 140800:
-                        self.notify_load_level_requested()
+                        self.notify_show_perk_requested()
+                        # self.notify_load_level_requested()
                     if self.ind != -1 and self.lists[self.num_ren][self.ind][5] != -1:
                         self.lists[self.num_ren][self.ind][4] = False
                         self.num_ren = self.lists[self.num_ren][self.ind][5]
@@ -84,7 +85,8 @@ class MenuGameMode(GameMode, MenuFunctional):
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.num_ren == 0 and 150 <= x <= 650 and 90 <= y <= 130:
-                    self.notify_load_level_requested()
+                    self.notify_show_perk_requested()
+                    # self.notify_load_level_requested()
                 if self.num_ren == 0:
                     self.into_new_render(x, y, self.text)
                 else:
@@ -174,6 +176,7 @@ class MenuGameMode(GameMode, MenuFunctional):
                         el['desc_position'])
         self.check_perk_status()
         self.print_button(window, self.shop)
+        # self.render_icons(window)
         for el in self.shop:
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
@@ -181,6 +184,17 @@ class MenuGameMode(GameMode, MenuFunctional):
     # Layer(Vector2(160, 160), "assets/units_spritesheet.png").render_tile(window, Vector2(47, 31),
     #                                                                    Vector2(2, 5),
     #                                                                    Vector2(0.5, 0.5))
+    # def render_icons(self, window):
+    #     scaling = 6
+    #     texture = pygame.image.load("assets/units_spritesheet.png")
+    #     t = pygame.Surface((texture.get_width() * scaling, texture.get_height() * scaling))
+    #     pygame.transform.scale(texture, t.get_size(), t)
+    #     for i in range(3):
+    #         texture_point = (150, 150 + i * 60)
+    #         sp_p = (3 * 96, (5 + i * 1) * 96)
+    #         sprite_point = (3 * 48, (5 + i * 1) * 48)
+    #         texture_rect = pygame.Rect(texture_point, sprite_point)
+    #         window.blit(t, sp_p, texture_rect)
 
     def check_perk_status(self):
         for j, availability in enumerate(self.data):

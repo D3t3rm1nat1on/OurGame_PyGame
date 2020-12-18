@@ -2,7 +2,7 @@ import enum
 
 import pygame
 
-from mode import GameModeObserver, PlayGameMode, MenuGameMode, PauseMode
+from mode import GameModeObserver, PlayGameMode, MenuGameMode, PauseMode, ChoosePerkMode
 from setup import LoadLevel
 
 
@@ -11,6 +11,7 @@ class UserInterface(GameModeObserver):
         Overlay = 0
         Play = 1
         Pause = 2
+        Perk = 3
 
     def __init__(self):
         pygame.init()
@@ -20,6 +21,7 @@ class UserInterface(GameModeObserver):
 
         self.play_game_mode = None
         self.overlay_pause_mode = None
+        self.overlay_perks_mode = None
         self.load_level_requested()
         self.overlay_mode = MenuGameMode()
         self.overlay_mode.add_observer(self)
@@ -51,6 +53,11 @@ class UserInterface(GameModeObserver):
         self.overlay_pause_mode.add_observer(self)
         self.current_mode = self.Modes.Pause
 
+    def show_perks_requested(self):
+        self.overlay_perks_mode = ChoosePerkMode()
+        self.overlay_perks_mode.add_observer(self)
+        self.current_mode = self.Modes.Perk
+
     def quit_requested(self):
         with open('src/config.txt', 'w') as f:
             f.write(str('10'))
@@ -64,6 +71,9 @@ class UserInterface(GameModeObserver):
             elif self.current_mode == self.Modes.Pause:
                 self.overlay_pause_mode.process_input()
                 self.overlay_mode.update()
+            elif self.current_mode == self.Modes.Perk:
+                self.overlay_perks_mode.process_input()
+                self.overlay_perks_mode.update()
             elif self.play_game_mode is not None:
                 self.play_game_mode.process_input()
                 self.play_game_mode.update()
@@ -74,6 +84,9 @@ class UserInterface(GameModeObserver):
                 self.window.fill((0, 0, 0))
             if self.current_mode == self.Modes.Overlay:
                 self.overlay_mode.render(self.window)
+
+            if self.current_mode == self.Modes.Perk:
+                self.overlay_perks_mode.render(self.window)
 
             if self.current_mode == self.Modes.Pause:
                 self.overlay_pause_mode.render(self.window)
