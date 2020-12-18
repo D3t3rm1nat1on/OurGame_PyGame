@@ -4,6 +4,7 @@ from collections import namedtuple
 import pygame
 
 from pygame.math import Vector2
+
 from layer import Layer
 from .GameMode import GameMode
 from .MenuFuctionalMode import MenuFunctional, Sound

@@ -74,8 +74,8 @@ class Sound:
 
     def play_music(self, volume):
         self.vol = volume
-        pygame.mixer.music.load('assets/song.mp3')
-        pygame.mixer.music.play(-1)
+        # pygame.mixer.music.load('assets/song.mp3')
+        # pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(self.vol / 100.0)
 
     def read_music_volume(self):

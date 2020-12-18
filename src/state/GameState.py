@@ -14,7 +14,14 @@ class GameState:
                       Unit(Vector2(12, 7), Vector2(-0.08, 0), state=State.g_running),
                       UnitBird()]
         self.items = [Unit(Vector2(14, 7), Vector2(-0.07, 0), affected_by_gravity=False, size=Vector2(0.5, 0.5),
-                           state=State.coin)]
+                           state=State.coin),
+                      Unit(Vector2(11, 7), Vector2(-0.07, 0), affected_by_gravity=False, size=Vector2(0.5, 0.5),
+                           state=State.hp_orb),
+                      Unit(Vector2(13, 7), Vector2(-0.07, 0), affected_by_gravity=False, size=Vector2(0.5, 0.5),
+                           state=State.x2),
+                      Unit(Vector2(12, 7), Vector2(-0.07, 0), affected_by_gravity=False, size=Vector2(0.5, 0.5),
+                           state=State.magnet),
+                      ]
         self.ground_level = 7
         self.border_left = 0.0
         self.border_right = 7.0

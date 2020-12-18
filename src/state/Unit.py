@@ -10,6 +10,9 @@ class State(enum.Enum):
     g_running = 3
     b_fly = 4
     coin = 5
+    hp_orb = 6
+    x2 = 7
+    magnet = 8
 
 
 class Unit:
