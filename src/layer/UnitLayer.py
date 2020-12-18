@@ -46,6 +46,21 @@ class UnitLayer(Layer):
                 'row': 5,
                 'max_index': 6,
             },
+            {
+                'name': 'hp_orb',
+                'row': 6,
+                'max_index': 6,
+            },
+            {
+                'name': '2x',
+                'row': 7,
+                'max_index': 6,
+            },
+            {
+                'name': 'magnet',
+                'row': 8,
+                'max_index': 10,
+            },
         ]
 
     def render(self, surface):

@@ -107,9 +107,6 @@ class MenuGameMode(GameMode, MenuFunctional):
         for el in self.text:
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
-        Layer(Vector2(1, 1), "assets/units_spritesheet_t.png").render_tile(window, Vector2(80, 80),
-                                                                           Vector2(48, 80),
-                                                                           Vector2(0.5, 0.5))
 
     def render1(self, window):
         window.blit(
