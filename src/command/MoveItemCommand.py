@@ -31,6 +31,7 @@ class MoveItemCommand(MoveCommand):
         rand_x = random.randint(int(self.state.world_size.x * factor[0]), int(self.state.world_size.x * factor[1]))
         rand_y = random.randint(self.state.ground_level - 2, self.state.ground_level)
         self.unit.position = Vector2(rand_x, rand_y)
+        self.unit.speed = Vector2(-.07, 0)
 
     def run(self):
         super().run()
