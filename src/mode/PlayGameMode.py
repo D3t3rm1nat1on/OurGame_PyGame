@@ -98,3 +98,6 @@ class PlayGameMode(GameMode):
             pygame.font.SysFont('Comic Sans MS', 10).render(str(self.player.speed.x), True, (0, 0, 0)),
             (150, 0))
         pygame.draw.rect(window, (0, 30, 8), (0, 50, self.player.stamina, 15))
+        text = "Lives: " + str(self.state.lives)
+        window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(text, True, (0, 0, 0)), (0, 70))
+        # pygame.draw.rect(window, (0, 30, 8), (0, 70, self.player.stamina, 15))

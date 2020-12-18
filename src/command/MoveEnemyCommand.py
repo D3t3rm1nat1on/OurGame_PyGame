@@ -35,10 +35,12 @@ class MoveEnemyCommand(MoveCommand):
             self.player_unit.position.x -= 0.75 - (enemy.position.x - self.player_unit.position.x)
             if self.player_unit.position.x < 0:
                 print("LOG: PakeT T H I C C")
-                self.serialize()
-                self.state.score = 0
+                self.state.lives -= 1
                 self.player_unit.position.y = 0
                 self.player_unit.position.x = 200
+                if self.state.lives < 0:
+                    self.serialize()
+                    self.state.score = 0
 
     def serialize(self):
         now = datetime.now()
