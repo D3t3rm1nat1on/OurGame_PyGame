@@ -9,16 +9,6 @@ from .GameMode import GameMode
 from .MenuFuctionalMode import MenuFunctional, Sound
 
 
-class Perk(object):
-    def __init__(self, description, desc_position, perk, perk_position, availability, price, *args, **kwargs):
-        self.description = description
-        self.desc_position = desc_position
-        self.perk = perk
-        self.perk_position = perk_position
-        self.availability = availability
-        self.price = price
-
-
 class MenuGameMode(GameMode, MenuFunctional):
     def __init__(self):
         super().__init__()
@@ -164,18 +154,13 @@ class MenuGameMode(GameMode, MenuFunctional):
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
 
-
-
     def render4(self, window):
         window.blit(
             pygame.font.SysFont('Comic Sans MS', 30).render("Ho-ho. I see u wanna spend money", True, (0, 0, 0)),
             (500, 20))
         with open("perks.json", "r") as read_file:
             h = read_file.read()
-            # * для распаковки итерируемого объекта в аргументы вызова
-            #self.data = json.load(read_file, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
         self.data = json.loads(h)
-        # self.data = Perk(**d)
         for el in self.data:
             window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(el['perk'], True, (0, 0, 0)),
                         el['perk_position'])
