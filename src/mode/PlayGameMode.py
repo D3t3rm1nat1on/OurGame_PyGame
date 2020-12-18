@@ -1,7 +1,8 @@
 import pygame
 from pygame.math import Vector2
 
-from command import JumpCommand, MovePlayerCommand, SprintCommand, SlowCommand, MoveEnemyCommand, MoveCommand, MoveItemCommand
+from command import JumpCommand, MovePlayerCommand, SprintCommand, SlowCommand, MoveEnemyCommand, MoveCommand, \
+    MoveItemCommand
 from layer import UnitLayer, ItemLayer
 from state import GameState
 
@@ -70,12 +71,18 @@ class PlayGameMode(GameMode):
         self.commands.clear()
 
         # background rolling
-        if self.layers[0].position .x > -self.game_window.get_width() and self.layers[1].position.x > 0:
+        if self.layers[0].position.x > -self.game_window.get_width() and self.layers[1].position.x > 0:
             self.layers[0].position.x -= 0.5
             self.layers[1].position.x -= 0.5
         else:
             self.layers[0].position.x = 0
             self.layers[1].position.x = 240
+
+        # update counters
+        if self.state.magnet_counter > 0:
+            self.state.magnet_counter -= 1
+        if self.state.x2_counter > 0:
+            self.state.x2_counter -= 1
 
     def render(self, window):
         self.game_window.fill((0, 0, 0))
