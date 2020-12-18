@@ -9,6 +9,16 @@ from .GameMode import GameMode
 from .MenuFuctionalMode import MenuFunctional, Sound
 
 
+class Perk(object):
+    def __init__(self, description, desc_position, perk, perk_position, availability, price, *args, **kwargs):
+        self.description = description
+        self.desc_position = desc_position
+        self.perk = perk
+        self.perk_position = perk_position
+        self.availability = availability
+        self.price = price
+
+
 class MenuGameMode(GameMode, MenuFunctional):
     def __init__(self):
         super().__init__()
@@ -94,8 +104,9 @@ class MenuGameMode(GameMode, MenuFunctional):
                             if self.num_ren == 5:
                                 self.into_new_render(x, y, self.text_theme)
                                 self.change_theme(x, y)
-                            elif self.num_ren==4:
+                            elif self.num_ren == 4:
                                 self.into_new_render(x, y, self.shop)
+                                self.convert_position_in_ind(x, y)
 
                 if self.num_ren == 1 and 110 <= x <= 150 and 90 <= y <= 130:
                     self.settings.lower_sound()
@@ -153,17 +164,23 @@ class MenuGameMode(GameMode, MenuFunctional):
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
 
+
+
     def render4(self, window):
-        window.blit(pygame.font.SysFont('Comic Sans MS', 30).render("Ho-ho. I see u wanna spend money", True, (0, 0, 0)),
-                    (500, 20))
+        window.blit(
+            pygame.font.SysFont('Comic Sans MS', 30).render("Ho-ho. I see u wanna spend money", True, (0, 0, 0)),
+            (500, 20))
         with open("perks.json", "r") as read_file:
+            h = read_file.read()
             # * для распаковки итерируемого объекта в аргументы вызова
-            self.data = json.load(read_file, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+            #self.data = json.load(read_file, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+        self.data = json.loads(h)
+        # self.data = Perk(**d)
         for el in self.data:
-            window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(el[0], True, (0, 0, 0)),
-                        el[1])
-            window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(el[2], True, (0, 0, 0)),
-                        el[3])
+            window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(el['perk'], True, (0, 0, 0)),
+                        el['perk_position'])
+            window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(el['description'], True, (0, 0, 0)),
+                        el['desc_position'])
         self.check_perk_status()
         self.print_button(window, self.shop)
         for el in self.shop:
@@ -174,6 +191,35 @@ class MenuGameMode(GameMode, MenuFunctional):
     #                                                                    Vector2(2, 5),
     #                                                                    Vector2(0.5, 0.5))
 
+    def check_perk_status(self):
+        for j, availability in enumerate(self.data):
+            if availability['availability']:
+                self.shop[j][2] = "Available"
+                self.shop[j][6] = True
+            else:
+                self.shop[j][2] = "Buy for " + str(availability['price'])
+
+    def convert_position_in_ind(self, x, y):
+        for i, el in enumerate(self.shop):
+            if el[1][0] <= x <= (el[1][0] + el[1][2]) and el[1][1] <= y <= (el[1][3] + el[1][1]):
+                self.ind = i
+                self.buy_perk()
+                break
+
+    def buy_perk(self):
+        if not self.shop[self.ind][6]:
+            with open('money.txt', 'r') as f:
+                money = int(f.read())
+            if money >= self.data[self.ind]['price']:
+                money -= self.data[self.ind]['price']
+                self.data[self.ind]['availability'] = True
+                self.shop[self.ind][6] = True
+                r = json.dumps(self.data)
+                with open('perks.json', 'w') as f:
+                    f.write(r)
+                with open('money.txt', 'w') as f:
+                    f.write(str(money))
+
     def render5(self, window):
         window.blit(pygame.font.SysFont('Comic Sans MS', 30).render('Themes', True, (0, 0, 0)),
                     (300, 20))
@@ -181,14 +227,6 @@ class MenuGameMode(GameMode, MenuFunctional):
         for el in self.text_theme:
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
-
-    def check_perk_status(self):
-        for j, availability in enumerate(self.data):
-            if availability[4]:
-                self.shop[j][2] = "Available"
-                self.shop[j][6] = True
-            else:
-                self.shop[j][2] = "Buy for "+ str(availability.price)
 
     def change_theme(self, x, y):
         for el in self.text_theme:
