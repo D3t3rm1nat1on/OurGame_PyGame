@@ -19,8 +19,9 @@ class MoveEnemyCommand(MoveCommand):
         enemy = self.unit
         # враг ушел за экран (успешный dodge)
         if enemy.position.x + enemy.size.x <= -enemy.size.x:
-            rand = random.randint(int(self.state.world_size.x / 2), int(self.state.world_size.x))
-            enemy.position = Vector2(rand, self.state.ground_level - 1)
+            rand_x = random.randint(int(self.state.world_size.x * 1.2), int(self.state.world_size.x * 1.5))
+            rand_y = random.randint(self.state.ground_level - 2, self.state.ground_level)
+            enemy.position = Vector2(rand_x, rand_y)
             self.state.score += 1
 
         if not enemy.is_alive:
