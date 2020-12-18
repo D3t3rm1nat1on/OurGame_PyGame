@@ -177,10 +177,7 @@ class MenuGameMode(GameMode, MenuFunctional):
         for el in self.shop:
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
-
-    # Layer(Vector2(160, 160), "assets/units_spritesheet.png").render_tile(window, Vector2(47, 31),
-    #                                                                    Vector2(2, 5),
-    #                                                                    Vector2(0.5, 0.5))
+        self.render_icons(window)
 
     def check_perk_status(self):
         for j, availability in enumerate(self.data):

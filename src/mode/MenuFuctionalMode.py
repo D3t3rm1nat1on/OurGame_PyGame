@@ -1,4 +1,7 @@
 import pygame
+from pygame.math import Vector2
+
+from layer import Layer
 
 
 class MenuFunctional:
@@ -53,6 +56,12 @@ class MenuFunctional:
     def print_button(self, window, text):
         for i, el in enumerate(text):
             self.button(window, el[0], el[1], el[2], el[3])
+
+    def render_icons(self, window):
+        layer = Layer(Vector2(64, 64), "assets/units_spritesheet_scaled.png")
+        for i in range(3):
+            layer.render_tile(window, Vector2(3.5, 1.2 + i * 1), Vector2(3, 6 + i * 1), Vector2(0.5, 0.5))
+
 
 
 class Sound:
