@@ -44,9 +44,9 @@ class MenuGameMode(GameMode, MenuFunctional):
         ]
 
         self.shop = [
-            [self.color[self.theme][0], (1250, 90, 200, 40), "", (1300, 90), False, -1, False],
-            [self.color[self.theme][0], (1250, 150, 200, 40), "", (1300, 150), False, -1, False],
-            [self.color[self.theme][0], (1250, 210, 200, 40), "", (1300, 210), False, -1, False],
+            [self.color[self.theme][0], (1250, 90, 230, 40), "", (1300, 90), False, -1, False],
+            [self.color[self.theme][0], (1250, 150, 230, 40), "", (1300, 150), False, -1, False],
+            [self.color[self.theme][0], (1250, 210, 230, 40), "", (1300, 210), False, -1, False],
             [self.color[self.theme][0], (500, 270, 500, 40), "Back", (700, 270), False, 0, False]
 
         ]
@@ -94,6 +94,8 @@ class MenuGameMode(GameMode, MenuFunctional):
                             if self.num_ren == 5:
                                 self.into_new_render(x, y, self.text_theme)
                                 self.change_theme(x, y)
+                            elif self.num_ren==4:
+                                self.into_new_render(x, y, self.shop)
 
                 if self.num_ren == 1 and 110 <= x <= 150 and 90 <= y <= 130:
                     self.settings.lower_sound()
@@ -162,7 +164,7 @@ class MenuGameMode(GameMode, MenuFunctional):
                         el[1])
             window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(el[2], True, (0, 0, 0)),
                         el[3])
-
+        self.check_perk_status()
         self.print_button(window, self.shop)
         for el in self.shop:
             if el[4]:
@@ -179,6 +181,14 @@ class MenuGameMode(GameMode, MenuFunctional):
         for el in self.text_theme:
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
+
+    def check_perk_status(self):
+        for j, availability in enumerate(self.data):
+            if availability[4]:
+                self.shop[j][2] = "Available"
+                self.shop[j][6] = True
+            else:
+                self.shop[j][2] = "Buy for "+ str(availability.price)
 
     def change_theme(self, x, y):
         for el in self.text_theme:
