@@ -1,5 +1,10 @@
+import json
+from collections import namedtuple
+
 import pygame
 
+from pygame.math import Vector2
+from layer import Layer
 from .GameMode import GameMode
 from .MenuFuctionalMode import MenuFunctional, Sound
 
@@ -11,33 +16,42 @@ class MenuGameMode(GameMode, MenuFunctional):
         self.ind = -1
         self.settings = Sound()
         self.num_ren = 0
-
+        self.data = []
         self.text_theme = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Shine like a princess", (300, 90), False, -1, True, 0],
             # тема, координаты прямоуг., название, коор. текста, выделение кнопки, переход в другой рендер,
             # доступна ли, номер темы
             [self.color[self.theme][0], (150, 150, 500, 40), "Toxic frogs", (300, 150), False, -1, True, 1],
-            [self.color[self.theme][0], (150, 210, 500, 40), 'Back', (300, 210), False, 1, False]
+            [self.color[self.theme][0], (150, 210, 500, 40), "Back", (300, 210), False, 1, False]
         ]
         self.text = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Let's go!", (300, 90), False, 140800],
             [self.color[self.theme][0], (150, 150, 500, 40), "Settings", (300, 150), False, 1],
             [self.color[self.theme][0], (150, 210, 500, 40), "Results", (300, 210), False, 2],
-            [self.color[self.theme][0], (150, 270, 500, 40), "Exit", (300, 270), False, 177013]
+            [self.color[self.theme][0], (150, 270, 500, 40), "Shop", (300, 270), False, 4],
+            [self.color[self.theme][0], (150, 330, 500, 40), "Exit", (300, 330), False, 177013]
         ]
         self.text_settings = [
             [self.color[self.theme][0], (150, 90, 500, 40), "Sound:" + str(self.settings.vol) + "%", (300, 90), False,
              -1],
             [self.color[self.theme][0], (150, 150, 500, 40), "Unlocked themes", (300, 150), False, 5],
-            [self.color[self.theme][0], (150, 210, 500, 40), 'To main menu', (300, 210), False, 0],
-            [self.color[self.theme][0], (110, 90, 30, 40), '-', (120, 85), False, -1],
-            [self.color[self.theme][0], (660, 90, 30, 40), '+', (670, 85), False, -1]
+            [self.color[self.theme][0], (150, 210, 500, 40), "To main menu", (300, 210), False, 0],
+            [self.color[self.theme][0], (110, 90, 30, 40), "-", (120, 85), False, -1],
+            [self.color[self.theme][0], (660, 90, 30, 40), "+", (670, 85), False, -1]
         ]
         self.results = [
-            [self.color[self.theme][0], (150, 400, 500, 40), 'To main menu', (300, 400), False, 0]
+            [self.color[self.theme][0], (150, 400, 500, 40), "To main menu", (300, 400), False, 0]
         ]
-        self.lists = [self.text, self.text_settings, self.results, 3, 4, self.text_theme]
-        self.renders = [self.render0, self.render1, self.render2, 3, 4, self.render5]
+
+        self.shop = [
+            [self.color[self.theme][0], (1250, 90, 200, 40), "", (1300, 90), False, -1, False],
+            [self.color[self.theme][0], (1250, 150, 200, 40), "", (1300, 150), False, -1, False],
+            [self.color[self.theme][0], (1250, 210, 200, 40), "", (1300, 210), False, -1, False],
+            [self.color[self.theme][0], (500, 270, 500, 40), "Back", (700, 270), False, 0, False]
+
+        ]
+        self.lists = [self.text, self.text_settings, self.results, 3, self.shop, self.text_theme]
+        self.renders = [self.render0, self.render1, self.render2, 3, self.render4, self.render5]
 
     def process_input(self):
         x, y = pygame.mouse.get_pos()
@@ -136,6 +150,27 @@ class MenuGameMode(GameMode, MenuFunctional):
         for el in self.results:
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
+
+    def render4(self, window):
+        window.blit(pygame.font.SysFont('Comic Sans MS', 30).render("Ho-ho. I see u wanna spend money", True, (0, 0, 0)),
+                    (500, 20))
+        with open("perks.json", "r") as read_file:
+            # * для распаковки итерируемого объекта в аргументы вызова
+            self.data = json.load(read_file, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+        for el in self.data:
+            window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(el[0], True, (0, 0, 0)),
+                        el[1])
+            window.blit(pygame.font.SysFont('Comic Sans MS', 30).render(el[2], True, (0, 0, 0)),
+                        el[3])
+
+        self.print_button(window, self.shop)
+        for el in self.shop:
+            if el[4]:
+                self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
+
+    # Layer(Vector2(16, 16), "assets/units_spritesheet.png").render_tile(window, Vector2(47, 31),
+    #                                                                    Vector2(2, 5),
+    #                                                                    Vector2(0.5, 0.5))
 
     def render5(self, window):
         window.blit(pygame.font.SysFont('Comic Sans MS', 30).render('Themes', True, (0, 0, 0)),
