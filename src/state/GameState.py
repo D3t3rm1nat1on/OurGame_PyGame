@@ -33,7 +33,16 @@ class GameState:
         self.money = 0
         self.lives = 0
         self.x2_counter = 0
-        self.magnet_counter = 120
+        self.magnet_counter = 0
+        self.max_lives = 1
+        self.x2_duration = 360
+        self.magnet_duration = 360
+        if GameState.active_perk == 0:
+            self.max_lives = 2
+        if GameState.active_perk == 1:
+            self.x2_duration = 720
+        if GameState.active_perk == 2:
+            self.magnet_duration = 720
 
     @property
     def world_width(self):

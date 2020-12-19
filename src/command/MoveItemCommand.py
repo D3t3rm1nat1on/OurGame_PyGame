@@ -54,11 +54,12 @@ class MoveItemCommand(MoveCommand):
                 if self.state.x2_counter > 0:
                     self.state.money += 1
             elif self.unit.state == State.hp_orb:
-                self.state.lives += 1
+                if self.state.max_lives > self.state.lives:
+                    self.state.lives += 1
             elif self.unit.state == State.x2:
-                self.state.x2_counter = 360
+                self.state.x2_counter = self.state.x2_duration
             elif self.unit.state == State.magnet:
-                self.state.magnet_counter = 360
+                self.state.magnet_counter = self.state.magnet_duration
             print("пойман предмет")
         if self.unit.state == State.coin and self.state.magnet_counter > 0:
             speed = abs(self.unit.speed.x) + abs(self.unit.speed.y)
