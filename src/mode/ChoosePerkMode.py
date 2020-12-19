@@ -59,9 +59,13 @@ class ChoosePerkMode(GameMode, MenuFunctional):
                 pygame.font.SysFont('Comic Sans MS', 30).render("You haven't bought any perk yet", True, (0, 0, 0)),
                 (170, 90))
         self.print_button(window, self.buttons)
-        for el in self.buttons:
+        for i, el in enumerate(self.buttons):
             if el[4]:
                 self.draw_frame(window, el[1][0], el[1][1], el[1][2], el[1][3])
+            if GameState.active_perk != -1 and i == GameState.active_perk:
+                window.blit(
+                    pygame.font.SysFont('Comic Sans MS', 30).render("Chosen", True, (0, 0, 0)),
+                    (el[1][0]+el[1][2]+50, el[1][1]))
 
     def add_available_perks(self):
         with open("perks.json", "r") as read_file:
@@ -78,4 +82,5 @@ class ChoosePerkMode(GameMode, MenuFunctional):
                 [self.color[self.theme][0], (150, 90 + 60, 500, 40), "Continue", (260, 90 + 60), False, 178908])
         else:
             self.buttons.append(
-                [self.color[self.theme][0], (150, 90 + 60 * (i+1), 500, 40), "Continue", (260, 90 + 60 * (i+1)), False, 178908])
+                [self.color[self.theme][0], (150, 90 + 60 * (i + 1), 500, 40), "Continue", (260, 90 + 60 * (i + 1)),
+                 False, 178908])
