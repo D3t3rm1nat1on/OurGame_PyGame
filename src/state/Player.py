@@ -4,7 +4,7 @@ from .Unit import Unit
 class Player(Unit):
     stamina: float
     max_speed_x: float
-    active_perk = -1
+
 
     def __init__(self, position, speed):
         super().__init__(position, speed)

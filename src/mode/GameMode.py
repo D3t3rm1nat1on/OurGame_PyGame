@@ -9,7 +9,7 @@ class GameMode:
         for observer in self.observers:
             observer.load_level_requested()
 
-    def notify_show_game_requested(self):
+    def notify_show_game_requested(self) -> object:
         for observer in self.observers:
             observer.show_game_requested()
 

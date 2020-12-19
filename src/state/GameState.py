@@ -6,6 +6,8 @@ from .Player import Player
 
 
 class GameState:
+    active_perk = -1
+
     def __init__(self):
         self.world_size = Vector2(15, 10)
         self.ground = [[None] * self.world_width] * self.world_height

@@ -10,7 +10,7 @@
       300,
       90
     ],
-    "availability": false,
+    "availability": true,
     "price": 30
   },
   {
@@ -24,7 +24,7 @@
       300,
       150
     ],
-    "availability": false,
+    "availability": true,
     "price": 110
   },
   {
@@ -38,7 +38,7 @@
       300,
       210
     ],
-    "availability": false,
+    "availability": true,
     "price": 90
   }
 ]
