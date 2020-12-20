@@ -70,3 +70,9 @@ class MoveEnemyCommand(MoveCommand):
                 f.write(' '.join(res))
                 f.write('\n')
             print()
+        tmp = 0
+        with open('results.txt', 'r') as f:
+            tmp = f.read()
+        with open('money.txt', 'w') as f:
+            f.write(self.state.money + tmp)
+
