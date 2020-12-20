@@ -10,6 +10,7 @@ from .GameMode import GameMode
 
 
 class PlayGameMode(GameMode):
+
     def __init__(self):
         super().__init__()
 
@@ -26,6 +27,10 @@ class PlayGameMode(GameMode):
         self.commands = []
 
     def process_input(self):
+        if self.state.lives < 0:
+            self.notify_end_game_requested()
+            self.state.lives = 0
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.notify_quit_requested()
