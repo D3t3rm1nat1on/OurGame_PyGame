@@ -13,7 +13,9 @@ class EndGameMode(GameMode):
             ["We hope, you were able to get pleasure.", [400, 210]],
             ["Team of developers: Ann, Andrew, Artyom.", [400, 270]],
             ["Assets by: ", [400, 330]],
-            ["https://o-lobster.itch.io/platformmetroidvania-pixel-art-asset-pack", [430, 390]]
+            ["https://o-lobster.itch.io/platformmetroidvania-pixel-art-asset-pack", [430, 390]],
+            ["Klevetc", [430, 450]]
+
         ]
 
     def process_input(self):
