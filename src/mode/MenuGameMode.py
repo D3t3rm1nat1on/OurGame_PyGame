@@ -166,6 +166,11 @@ class MenuGameMode(GameMode, MenuFunctional):
         window.blit(
             pygame.font.SysFont('Comic Sans MS', 30).render("Ho-ho. I see u wanna spend money", True, (0, 0, 0)),
             (500, 20))
+        with open('money.txt', 'r') as f:
+            money = int(f.read())
+        window.blit(
+            pygame.font.SysFont('Comic Sans MS', 30).render("In your wallet: " + str(money), True, (0, 0, 0)),
+                                                        (1200, 40))
         with open("perks.json", "r") as read_file:
             h = read_file.read()
         self.data = json.loads(h)

@@ -45,7 +45,6 @@ class MoveEnemyCommand(MoveCommand):
                     self.serialize()
                     self.state.score = 0
 
-
     def serialize(self):
         now = datetime.now()
         date = '.'.join([str(now.day), str(now.month), str(now.year)])
@@ -76,7 +75,6 @@ class MoveEnemyCommand(MoveCommand):
             print()
         tmp = 0
         with open('money.txt', 'r') as f:
-            tmp = f.read()
+            tmp = int(f.read())
         with open('money.txt', 'w') as f:
-            f.write(self.state.money + tmp)
-
+            f.write(str(self.state.money + tmp))
