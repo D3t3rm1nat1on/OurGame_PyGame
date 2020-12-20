@@ -3,7 +3,10 @@ from datetime import datetime
 import pygame
 from pygame.math import Vector2
 
+from mode import PlayGameMode
 from state import Unit
+from mode import PlayGameMode
+
 from .MoveCommand import MoveCommand
 
 
@@ -41,6 +44,7 @@ class MoveEnemyCommand(MoveCommand):
                 if self.state.lives < 0:
                     self.serialize()
                     self.state.score = 0
+
 
     def serialize(self):
         now = datetime.now()

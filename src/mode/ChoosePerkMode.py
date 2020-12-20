@@ -41,7 +41,6 @@ class ChoosePerkMode(GameMode, MenuFunctional):
                             self.notify_show_game_requested()
                         else:
                             GameState.active_perk = el[5]
-            print(GameState.active_perk)
             if event.type == pygame.QUIT:
                 self.notify_quit_requested()
 
