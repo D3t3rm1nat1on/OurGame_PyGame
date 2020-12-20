@@ -8,11 +8,12 @@ class EndGameMode(GameMode):
     def __init__(self):
         super().__init__()
         self.end_game = [
-            ["Game Over", [500, 90]],
-            ["Thank you for downloading OurGame_PyGame game.", [500, 150]],
-            ["We hope, you were able to get pleasure.", [500, 210]],
-            ["Team of developers: Ann, Andrew, Artyom.", [500, 270]],
-            ["Assets by:  X", [500, 330]]
+            ["Game Over", [400, 90]],
+            ["Thank you for downloading OurGame_PyGame game.", [400, 150]],
+            ["We hope, you were able to get pleasure.", [400, 210]],
+            ["Team of developers: Ann, Andrew, Artyom.", [400, 270]],
+            ["Assets by: ", [400, 330]],
+            ["https://o-lobster.itch.io/platformmetroidvania-pixel-art-asset-pack", [430, 390]]
         ]
 
     def process_input(self):
@@ -35,5 +36,5 @@ class EndGameMode(GameMode):
             el[1][1] -= 20
         window.blit(
             pygame.font.SysFont('Comic Sans MS', 30).render("Press Space to go to Main menu", True, (0, 0, 0)),
-            (500, 600))
+            (400, 600))
         time.sleep(1)
